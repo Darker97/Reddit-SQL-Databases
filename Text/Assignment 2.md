@@ -43,7 +43,7 @@ WHERE lecturer != ‚LLIR‘
 
 ### JSON - Structure
 
-![]("./Reddit - JSON Structure.jpeg")
+![](./Reddit - JSON Structure.jpeg)
 ### Keys
 
 ![](/Reddit - Keys.jpeg)
