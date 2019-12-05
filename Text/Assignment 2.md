@@ -40,8 +40,13 @@ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject)
 ``` 
 
 ## Task 2: FDs and Normalization
-1. *Functional Dependencies*
-1. *Find the Keys*
+1. *Functional Dependencies* \ 
+		We have two FDs. 1. room time day -> manager 
+		2. room time day -> applicant 
+		--> room time day --> manager applicant 
+1. *Find the Keys* 
+Primary Key: room, time, day, manager 
+Super Keys: 1. room, time, day, applicant 2. room, time, day, manager, applicant 
 1. *Show the relations is in 3NF but not in BCNF*
 1. *Decompose the Relations that are in BCNF*
 1. *Draw an E/R-Diagram that describes the System.*
