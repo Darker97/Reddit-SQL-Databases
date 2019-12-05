@@ -10,7 +10,7 @@ def createTables(Assistant):
 def main():
     # Load the keys for the MySql Database
 
-    File = open("../Keys/Setup.config").readlines()
+    File = open("Setup.config").readlines()
     host = File.pop(0)
     port = File.pop(0)
     user = File.pop(0)
