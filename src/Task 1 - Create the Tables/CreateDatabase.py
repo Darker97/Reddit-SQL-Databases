@@ -10,7 +10,7 @@ def createTables(Assistant):
 def main():
     # Load the keys for the MySql Database
 
-    File = open("../Keys/Setup.config").readlines()
+    File = open("Setup.config").readlines()
     host = File.pop(0)
     port = File.pop(0)
     user = File.pop(0)
@@ -34,19 +34,6 @@ def main():
     Assistant = Database.cursor()
 
     createTables(Assistant)
-
-# Load the Data from the Source Folder
-
-
-# Load the Data from the given File
-    for File in Files:
-        datenpunkt = File.readlines()
-        for data in datenpunkt:
-            encoded = json.loads(data)
-            # print (encoded["author"])
-            DataToSQLServer(encoded, Database)
-
-
 
 # ------------------------------------------------ #
 
