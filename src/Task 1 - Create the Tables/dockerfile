@@ -1,5 +1,6 @@
-FROM python:3
-ADD CreateDatabase.py /
+FROM python:3.7
+COPY CreateDatabase.py /
+COPY Setup.config /
 
 RUN pip3 install mysql.connector
 CMD [ "python3", "./CreateDatabase.py" ]

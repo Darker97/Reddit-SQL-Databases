@@ -11,5 +11,10 @@ services:
       MYSQL_DATABASE: Reddit
     ports:
       - "3308:3306"
-    expose:
-      - '3306'
+
+  TabelleCreator:
+    image: tablescreater:0.1
+
+networks:
+  liitleNetwork:
+    driver: custom-driver-1
