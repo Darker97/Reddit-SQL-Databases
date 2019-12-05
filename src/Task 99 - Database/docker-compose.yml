@@ -6,6 +6,10 @@ services:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: helloworld
+      MYSQL_User: Python
+      MYSQL_PASSWORD: Python
       MYSQL_DATABASE: Reddit
     ports:
       - "3308:3306"
+    expose:
+      - '3306'
