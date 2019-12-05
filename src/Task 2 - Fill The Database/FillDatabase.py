@@ -1,9 +1,22 @@
 import json
 import mysql.connector as mysql
+import time
 
 
-def createTables(Assistant):
-    Assistant.execute("show Databases")
+def createData(Assistant):
+    # Load the Data from the Source Folder
+    Files = []
+    Files.append(open("./Data/RC_2007-10"))
+    Files.append(open("./Data/RC_2011-07"))
+    Files.append(open("./Data/RC_2012-12"))
+
+    # Load the Data from the given File
+    for File in Files:
+        datenpunkt = File.readlines()
+        for data in datenpunkt:
+            encoded = json.loads(data)
+            # print (encoded["author"])
+            DataToSQLServer(encoded, Assistant)
 
 
 
@@ -30,38 +43,58 @@ def main():
         database=database
         # auth_plugin='mysql_native_password'
     )
+    return Database
 
-    Assistant = Database.cursor()
-
-    createTables(Assistant)
-
-# Load the Data from the Source Folder
-    Files = []
-    Files.append(open("./Data/RC_2007-10"))
-    Files.append(open("./Data/RC_2011-07"))
-    Files.append(open("./Data/RC_2012-12"))
-
-# Load the Data from the given File
-    for File in Files:
-        datenpunkt = File.readlines()
-        for data in datenpunkt:
-            encoded = json.loads(data)
-            # print (encoded["author"])
-            DataToSQLServer(encoded, Database)
-
-
+# ------------------------------------------------ #
+def startFile():
+    while True:
+        data = main()
+        if data.is_connected():
+            if checkTableExists(data, "users"):
+                createData(data)
+                print("------------------------------------------------------")
+                print("Data is inserted")
+                print("------------------------------------------------------")
+                break
+            else:
+                print("------------------------------------------------------")
+                print("Tables do not exist yet!!!")
+                print("Proceeding...")
+                time.sleep(60)
+                print("Trying again")
+                print("------------------------------------------------------")
+        else:
+            print("------------------------------------------------------")
+            print("Connection is not established!")
+            print("Proceeding...")
+            time.sleep(60)
+            print("Trying again")
+            print("------------------------------------------------------")
 
 
 # ------------------------------------------------ #
+def checkTableExists(dbcon, tablename) -> bool:
+    dbcur = dbcon.cursor()
+    dbcur.execute("""
+        SELECT COUNT(*)
+        FROM information_schema.tables
+        WHERE table_name = '{0}'
+        """.format(tablename.replace('\'', '\'\'')))
+    if dbcur.fetchone()[0] == 1:
+        dbcur.close()
+        return True
+    dbcur.close()
+    return False
 
 # transfers the given Data to the SQL Server
 def DataToSQLServer(JSONFile, DatabaseAssistant):
+
     pass
 
 # ------------------------------------------------ #
 
 
-main()
+startFile()
 # database = JoinDatabase()
 
 

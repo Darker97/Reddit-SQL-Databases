@@ -1,9 +1,13 @@
 import json
 import mysql.connector as mysql
+import time
+
 
 
 def createTables(Assistant):
-    Assistant.execute("show Databases")
+    File = open("querys.sql")
+    Querys = File.read()
+    Assistant.execute(Querys)
 
 
 
@@ -31,14 +35,31 @@ def main():
         # auth_plugin='mysql_native_password'
     )
 
-    Assistant = Database.cursor()
+    return Database
 
-    createTables(Assistant)
+
+def startFile():
+    while True:
+        data = main()
+        if data.is_connected():
+            createTables()
+            print("------------------------------------------------------")
+            print("Tables Are Created!!!")
+            print("------------------------------------------------------")
+            break
+        else:
+            print("------------------------------------------------------")
+            print("Connection is not established!")
+            print("Proceeding...")
+            time.sleep(60)
+            print("Trying again")
+            print("------------------------------------------------------")
+
 
 # ------------------------------------------------ #
 
 
-main()
+startFile()
 # database = JoinDatabase()
 
 
