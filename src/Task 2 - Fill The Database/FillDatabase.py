@@ -31,7 +31,7 @@ def main():
     database = File.pop(0)
 
     print("------------------------------------------------------")
-    print("Connecting to Database: " + host + " as " + user)
+    print("Connecting to Database: " + host + " as " + user + " on port " + port)
     print("Password: " + passwd)
     print("------------------------------------------------------")
 
@@ -39,10 +39,12 @@ def main():
         host=host,
         port=port,
         user=user,
-        passwd=passwd,
+        # passwd=passwd,
+        # unix_socket="../var/run/mysqld/mysqld.sock",
         database=database
         # auth_plugin='mysql_native_password'
     )
+
     return Database
 
 # ------------------------------------------------ #
