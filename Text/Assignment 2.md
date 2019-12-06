@@ -1,35 +1,52 @@
 # Assignment 
 ## Task 1: Relational Algebra
 ``` 
+<!-- Bei 1 - 5 muss jeweils noch die Schreibweise angepasst werden. Z.B bei 1 muss name nach unten gesetzt werden und die Bedninung für den Theta- Join muss unter das Symbol, steht hier jeweils in Klammern dahinter -->
+
 1) 
 SELECT name 
 IN student JOIN enrolled
 Where code = ‚2dv513‘  
+
+result := 𝜋 name(student ⋈ (code = '2dv513') enrolledIn)
 
 2)
 SELECT name 
 IN student JOIN enrolled
 WHERE code = ‚2dv513‘ OR code = ‚1dv513‘
 
+result := (𝜋 name(student ⋈ (code = '2dv513') enrolledIn)) ∪ (𝜋 name(student ⋈ (code = '1dv513') enrolledIn))
+
 3) 
 SELECT lecturer
 IN subject
 WHERE code = ‚2dv610‘
+
+result := 𝜋 lecturer (𝜎 code = '2dv610'(subject))
 
 4)
 SELECT lecturer
 IN subject
 WHERE code = ‚2dv513‘ AND code =‚1dv513‘
 
+result := (𝜋 lecturer (𝜎 code = '2dv610'(subject))) ∪ (𝜋 lecturer (𝜎 code = '1dv513'(subject)))
+
 5)
 SELECT name 
 IN student JOIN enrolled JOIN subject
-WHERE lecturer != ‚LLIR‘
+WHERE lecturer != ‚ILIR‘
+
+result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject)
 ``` 
 
 ## Task 2: FDs and Normalization
-1. *Functional Dependencies*
-1. *Find the Keys*
+1. *Functional Dependencies* \ 
+		We have two FDs. 1. room time day -> manager 
+		2. room time day -> applicant 
+		--> room time day --> manager applicant 
+1. *Find the Keys* 
+Primary Key: room, time, day, manager 
+Super Keys: 1. room, time, day, applicant 2. room, time, day, manager, applicant 
 1. *Show the relations is in 3NF but not in BCNF*
 1. *Decompose the Relations that are in BCNF*
 1. *Draw an E/R-Diagram that describes the System.*
