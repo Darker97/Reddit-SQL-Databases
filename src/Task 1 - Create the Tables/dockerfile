@@ -1,6 +1,7 @@
 FROM python:3.7
 COPY CreateDatabase.py /
 COPY Setup.config /
+COPY querys.sql /
 
 RUN pip3 install mysql.connector
 CMD [ "python3", "./CreateDatabase.py" ]
