@@ -46,8 +46,9 @@ def main():
     return Database
 
 # ------------------------------------------------ #
+# Checks if the Connection is established. If not, we wait.
 def startFile():
-    while True:
+    try:
         data = main()
         if data.is_connected():
             if checkTableExists(data, "users"):
@@ -55,7 +56,6 @@ def startFile():
                 print("------------------------------------------------------")
                 print("Data is inserted")
                 print("------------------------------------------------------")
-                break
             else:
                 print("------------------------------------------------------")
                 print("Tables do not exist yet!!!")
@@ -63,13 +63,14 @@ def startFile():
                 time.sleep(60)
                 print("Trying again")
                 print("------------------------------------------------------")
-        else:
-            print("------------------------------------------------------")
-            print("Connection is not established!")
-            print("Proceeding...")
-            time.sleep(60)
-            print("Trying again")
-            print("------------------------------------------------------")
+    except:
+        print("------------------------------------------------------")
+        print("Connection is not established!")
+        print("Proceeding...")
+        time.sleep(60)
+        print("Trying again")
+        print("------------------------------------------------------")
+        startFile()
 
 
 # ------------------------------------------------ #
@@ -88,7 +89,7 @@ def checkTableExists(dbcon, tablename) -> bool:
 
 # transfers the given Data to the SQL Server
 def DataToSQLServer(JSONFile, DatabaseAssistant):
-
+    # TODO
     pass
 
 # ------------------------------------------------ #
