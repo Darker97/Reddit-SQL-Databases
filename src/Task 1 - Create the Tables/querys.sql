@@ -1,11 +1,3 @@
-create Table users {
-
-}
-
-create Table comments{
-
-}
-
-create table subbreddits {
-
-}
+CREATE TABLE IF NOT EXISTS `Reddit`.`Comments` (`ID` VARCHAR(45) NOT NULL, `name` VARCHAR(45) NULL,`parentID` VARCHAR(45) NULL,`body` VARCHAR(1024) NULL,`ups` INT NULL,`downs` INT NULL,`created` INT NULL,`conttiversiality` INT NULL,`Archived` BOOLEAN NULL,`USER` VARCHAR(128) NULL,`SUBREDDIT` VARCHAR(128) NULL, PRIMARY KEY (`ID`));
+CREATE TABLE IF NOT EXISTS `Reddit`.`Subreddits` (`Name` VARCHAR(48) NOT NULL,PRIMARY KEY (`Name`));
+CREATE TABLE IF NOT EXISTS `Reddit`.`User` (`ID` INT NOT NULL,`Name` VARCHAR(45) NOT NULL,PRIMARY KEY (`Name`),UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);

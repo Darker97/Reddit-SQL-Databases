@@ -7,9 +7,9 @@ import time
 def createTables(Assistant):
     print("Starting to execute the file")
     File = open("querys.sql")
-    Querys = File.read()
-    Assistant.execute(Querys)
-
+    Querys = File.readlines()
+    for action in Querys:
+        Assistant.execute(action)
 
 
 def main():
