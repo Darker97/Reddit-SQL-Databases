@@ -10,13 +10,17 @@ def createData(Assistant):
     Files.append(open("./Data/RC_2011-07"))
     Files.append(open("./Data/RC_2012-12"))
 
+    USER_ID = 0
+
     # Load the Data from the given File
     for File in Files:
         datenpunkt = File.readlines()
         for data in datenpunkt:
             encoded = json.loads(data)
+            print(encoded["author"])
+            USER_ID += 1
             # print (encoded["author"])
-            DataToSQLServer(encoded, Assistant)
+            DataToSQLServer(encoded, Assistant, USER_ID)
 
 
 
@@ -89,11 +93,43 @@ def checkTableExists(dbcon, tablename) -> bool:
     dbcur.close()
     return False
 
-# transfers the given Data to the SQL Server
-def DataToSQLServer(JSONFile, DatabaseAssistant):
-    # TODO
-    pass
 
+# transfers the given Data to the SQL Server
+def DataToSQLServer(JSONFile, DatabaseAssistant, USER_ID):
+
+    ID = str(JSONFile["id"])
+    name = str(JSONFile["name"])
+    parentID = str(JSONFile["parent_id"])
+    body = str(JSONFile["body"])
+    ups = str(JSONFile["ups"])
+    downs = str(JSONFile["downs"])
+    created =  str(JSONFile["created_utc"])
+    conttiversiality = str(JSONFile["controversiality"])
+    Archived = JSONFile["archived"]
+    USER =  str(JSONFile["author"])
+    SUBREDDIT =  str(JSONFile["subreddit_id"])
+
+    querySubreddits = """INSERT INTO Reddit.Subreddits (Name) 
+                            VALUES (%s)"""
+    try:
+        DatabaseAssistant.cursor().execute(querySubreddits, (SUBREDDIT,))
+    except:
+        print("----------------->DOUBLE SUP")
+    queryComments ="""INSERT INTO Reddit.Comments (ID, name, parentID, body ,ups ,downs , created, conttiversiality, Archived ,USER, SUBREDDIT) 
+                        VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+
+    try:
+        DatabaseAssistant.cursor().execute(queryComments, (ID, name, parentID, body, ups, downs, created, conttiversiality, Archived, USER, SUBREDDIT))
+    except:
+        print("----------------->DOUBLE COMMENTS<-----------------")
+    USER_ID += 1
+
+    queryUsers = """INSERT INTO Reddit.User (ID, Name) 
+                        VALUES (%s,%s)"""
+    try:
+        DatabaseAssistant.cursor().execute(queryUsers, (str(USER_ID), USER))
+    except:
+        print("----------------->DOUBLEUSER")
 # ------------------------------------------------ #
 
 
