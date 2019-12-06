@@ -44,13 +44,13 @@ def startFile():
     try:
         data = main()
         if data.is_connected():
-            createTables()
+            createTables(data.cursor())
             print("------------------------------------------------------")
             print("Tables Are Created!!!")
             print("------------------------------------------------------")
     except:
         print("------------------------------------------------------")
-        print("Connection is not established!")
+        print()
         print("Proceeding...")
         time.sleep(60)
         print("Trying again")
