@@ -52,7 +52,7 @@ def startFile():
         print("------------------------------------------------------")
         print()
         print("Proceeding...")
-        time.sleep(60)
+        time.sleep(30)
         print("Trying again")
         print("------------------------------------------------------")
         startFile()
