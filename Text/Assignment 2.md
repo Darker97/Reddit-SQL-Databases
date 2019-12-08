@@ -44,6 +44,12 @@ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject)
 		We have two FDs. 1. room time day -> manager 
 		2. room time day -> applicant 
 		--> room time day --> manager applicant 
+		
+		or more?
+* 		manager day -> room
+* 	 	manager applicant day -> room time
+* 	   room time day -> manager applicant
+* 	   applicant day -> room manager time 
 1. *Find the Keys* 
 Primary Key: room, time, day, manager 
 Super Keys: 1. room, time, day, applicant 2. room, time, day, manager, applicant 
@@ -52,6 +58,12 @@ Super Keys: 1. room, time, day, applicant 2. room, time, day, manager, applicant
 1. *Draw an E/R-Diagram that describes the System.*
 
 ## Task 3: Setting up the Reddit Database
+###Schemas with types
+
+* users(author)
+* subreddits(subreddit, subreddit-id,)
+* comments(id, name, body, score(ups , downs)<!--brauchen wir das?-->created_utc, link-id, parent-id)
+
 
 ### Notes
 - The data is stored in Files
@@ -61,6 +73,7 @@ Super Keys: 1. room, time, day, applicant 2. room, time, day, manager, applicant
 ### JSON - Structure
 
 ![]("./Reddit - JSON Structure.jpeg")
+
 ### Keys
 
 ![](/Reddit - Keys.jpeg)
