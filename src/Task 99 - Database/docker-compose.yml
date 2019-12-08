@@ -18,7 +18,11 @@ services:
     ports:
       - "3308:3306"
   Tablecreater:
+    links:
+      - mySQLEnvoirment
     image: tablescreater:0.1
 
 volumes:
   db_data: {}
+
+

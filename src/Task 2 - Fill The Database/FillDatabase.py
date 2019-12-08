@@ -1,6 +1,7 @@
 import json
 import mysql.connector as mysql
 import time
+from tqdm import tqdm
 
 
 def createData(Assistant):
@@ -15,13 +16,16 @@ def createData(Assistant):
     # Load the Data from the given File
     for File in Files:
         datenpunkt = File.readlines()
-        for data in datenpunkt:
+
+        for data in tqdm(datenpunkt, desc=File.name):
             encoded = json.loads(data)
-            print(encoded["author"])
+            # print(encoded["author"])
             USER_ID += 1
             # print (encoded["author"])
             DataToSQLServer(encoded, Assistant, USER_ID)
-
+        print("End of File %s, starting second", File.name)
+        print("Starting next...")
+        print("--------------------------------------------------")
 
 
 def main():
@@ -114,14 +118,16 @@ def DataToSQLServer(JSONFile, DatabaseAssistant, USER_ID):
     try:
         DatabaseAssistant.cursor().execute(querySubreddits, (SUBREDDIT,))
     except:
-        print("----------------->DOUBLE SUP")
+        # print("----------------->DOUBLE SUP")
+        pass
     queryComments ="""INSERT INTO Reddit.Comments (ID, name, parentID, body ,ups ,downs , created, conttiversiality, Archived ,USER, SUBREDDIT) 
                         VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 
     try:
         DatabaseAssistant.cursor().execute(queryComments, (ID, name, parentID, body, ups, downs, created, conttiversiality, Archived, USER, SUBREDDIT))
     except:
-        print("----------------->DOUBLE COMMENTS<-----------------")
+        # print("----------------->DOUBLE COMMENTS<-----------------")
+        pass
     USER_ID += 1
 
     queryUsers = """INSERT INTO Reddit.User (ID, Name) 
@@ -129,7 +135,8 @@ def DataToSQLServer(JSONFile, DatabaseAssistant, USER_ID):
     try:
         DatabaseAssistant.cursor().execute(queryUsers, (str(USER_ID), USER))
     except:
-        print("----------------->DOUBLEUSER")
+        # print("----------------->DOUBLEUSER")
+        pass
 # ------------------------------------------------ #
 
 
