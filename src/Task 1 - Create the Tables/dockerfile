@@ -4,4 +4,4 @@ COPY Setup.config /
 COPY querys.sql /
 
 RUN pip3 install mysql.connector
-CMD [ "python3", "./CreateDatabase.py" ]
+CMD [ "python3", "-u","./CreateDatabase.py" ]
