@@ -1,8 +1,7 @@
 import json
 import mysql.connector as mysql
 import time
-
-
+import socket
 
 def createTables(Assistant):
     print("Starting to execute the file")
@@ -39,8 +38,12 @@ def main():
 
     return Database
 
+def getIP(name):
+    return socket.gethostbyname(name)
+
 # Checks if the Connection is established. If not, we wait.
 def startFile():
+    time.sleep(10)
     try:
         data = main()
         if data.is_connected():
@@ -48,17 +51,16 @@ def startFile():
             print("------------------------------------------------------")
             print("Tables Are Created!!!")
             print("------------------------------------------------------")
-    except:
+    except Exception as e:
         print("------------------------------------------------------")
-        print()
+        print(e)
         print("Proceeding...")
-        time.sleep(60)
+        time.sleep(30)
         print("Trying again")
         print("------------------------------------------------------")
         startFile()
 
 # ------------------------------------------------ #
-
 
 startFile()
 # database = JoinDatabase()

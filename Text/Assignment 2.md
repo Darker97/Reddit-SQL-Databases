@@ -1,6 +1,15 @@
+---
+title: "Assignment 2"
+author: "Carolin Brückman und Christian Baltzer"
+output: pdf_document
+
+---
+
+
 # Assignment 
 ## Task 1: Relational Algebra
-``` 
+
+```{SQL} 
 <!-- Bei 1 - 5 muss jeweils noch die Schreibweise angepasst werden. Z.B bei 1 muss name nach unten gesetzt werden und die Bedninung für den Theta- Join muss unter das Symbol, steht hier jeweils in Klammern dahinter -->
 
 1) 
@@ -36,8 +45,8 @@ SELECT name
 IN student JOIN enrolled JOIN subject
 WHERE lecturer != ‚ILIR‘
 
-result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject)
 ``` 
+$$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) $$
 
 ## Task 2: FDs and Normalization
 1. *Functional Dependencies* \ 
@@ -81,11 +90,10 @@ The manager and the applicant are independent from one another therefore the rel
 
 ### JSON - Structure
 
-![]("./Reddit - JSON Structure.jpeg")
-
+![]("Reddit-JSONStructure.jpeg")
 ### Keys
 
-![](/Reddit - Keys.jpeg)
+![](Reddit - Keys.jpeg)
 
 We can safely ignore keys not mentioned here.
 
