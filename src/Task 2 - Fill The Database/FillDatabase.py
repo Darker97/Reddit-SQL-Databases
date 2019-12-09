@@ -58,6 +58,7 @@ def main():
 # ------------------------------------------------ #
 # Checks if the Connection is established. If not, we wait.
 def startFile():
+    time.sleep(20)
     try:
         data = main()
         if data.is_connected():
