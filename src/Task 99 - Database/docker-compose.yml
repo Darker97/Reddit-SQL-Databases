@@ -2,7 +2,7 @@ version: '0'
 
 services:
 
-  mySQLEnvoirment:
+  db:
     image: mysql:latest
     environment:
       MYSQL_DATABASE: Reddit
@@ -18,5 +18,26 @@ services:
     ports:
       - "3308:3306"
 
+  Tablecreater:
+    links:
+      - "db:database"
+    image: tablescreater:0.1
+
+  Tablefiller:
+    links:
+      - "db:database"
+    image: tablefiller:0.1
+    volumes:
+      - type: bind
+          source: ./data
+          target: ./data
+
+
+networks:
+  main:
+    name: Assignment 1 DB
+
 volumes:
   db_data: {}
+
+

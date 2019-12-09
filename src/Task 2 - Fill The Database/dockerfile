@@ -3,4 +3,5 @@ COPY FillDatabase.py /
 COPY Setup.config /
 
 RUN pip3 install mysql.connector
-CMD [ "python3", "./FillDatabase.py" ]
+RUN pip3 install tqdm
+CMD [ "python3","-u", "FillDatabase.py" ]

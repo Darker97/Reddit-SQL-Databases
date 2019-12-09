@@ -1,6 +1,15 @@
+---
+title: "Assignment 2"
+author: "Carolin Brückman und Christian Baltzer"
+output: pdf_document
+
+---
+
+
 # Assignment 
 ## Task 1: Relational Algebra
-``` 
+
+```{SQL} 
 <!-- Bei 1 - 5 muss jeweils noch die Schreibweise angepasst werden. Z.B bei 1 muss name nach unten gesetzt werden und die Bedninung für den Theta- Join muss unter das Symbol, steht hier jeweils in Klammern dahinter -->
 
 1) 
@@ -36,22 +45,43 @@ SELECT name
 IN student JOIN enrolled JOIN subject
 WHERE lecturer != ‚ILIR‘
 
-result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject)
 ``` 
+$$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) $$
 
 ## Task 2: FDs and Normalization
 1. *Functional Dependencies* \ 
-		We have two FDs. 1. room time day -> manager 
-		2. room time day -> applicant 
+		We have two FDs. 
+
+		room time day -> manager 
+
+		room time day -> applicant 
+		
 		--> room time day --> manager applicant 
+		
+		*or more?*
+		
+  		manager day -> room
+		
+		manager applicant day -> room time
+		
+		room time day -> manager applicant
+		
+		applicant day -> room manager time 
 1. *Find the Keys* 
-Primary Key: room, time, day, manager 
-Super Keys: 1. room, time, day, applicant 2. room, time, day, manager, applicant 
-1. *Show the relations is in 3NF but not in BCNF*
+Primary Key: room, time, day 
+Super Keys: 1. room, time, day, applicant 2. room, time, day, manager 3. room, time, day, manager, applicant 
+1. *Show the relations is in 3NF but not in BCNF* 
+The manager and the applicant are independent from one another therefore the relation is in 3NF. <!--Beweis das es nicht in BCNF ist fehlt noch--> 
 1. *Decompose the Relations that are in BCNF*
 1. *Draw an E/R-Diagram that describes the System.*
 
 ## Task 3: Setting up the Reddit Database
+###Schemas with types
+
+* users(author)
+* subreddits(subreddit, subreddit-id,)
+* comments(id, name, body, score(ups , downs)<!--brauchen wir das?-->created_utc, link-id, parent-id)
+
 
 ### Notes
 - The data is stored in Files
@@ -60,10 +90,10 @@ Super Keys: 1. room, time, day, applicant 2. room, time, day, manager, applicant
 
 ### JSON - Structure
 
-![]("./Reddit - JSON Structure.jpeg")
+![]("Reddit-JSONStructure.jpeg")
 ### Keys
 
-![](/Reddit - Keys.jpeg)
+![](Reddit - Keys.jpeg)
 
 We can safely ignore keys not mentioned here.
 
