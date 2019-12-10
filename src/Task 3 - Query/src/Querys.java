@@ -1,5 +1,10 @@
 public class Querys {
 
+    /**
+     * Query to use in other, not mentioned cases
+     * @param Input
+     * @return
+     */
     public static String SELECT(String Input){
         return "";
     }
