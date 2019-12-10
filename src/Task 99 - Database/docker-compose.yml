@@ -27,10 +27,6 @@ services:
     links:
       - "db:database"
     image: tablefiller:0.1
-    volumes:
-      - type: bind
-          source: ./data
-          target: ./data
 
 
 networks:

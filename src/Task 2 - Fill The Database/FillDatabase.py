@@ -2,6 +2,7 @@ import json
 import mysql.connector as mysql
 import time
 from tqdm import tqdm
+import sys
 
 
 def createData(Assistant):
@@ -63,6 +64,7 @@ def startFile():
         data = main()
         if data.is_connected():
             if checkTableExists(data, "users"):
+                checkIfTablesAreFull(data)
                 createData(data)
                 print("------------------------------------------------------")
                 print("Data is inserted")
@@ -98,6 +100,16 @@ def checkTableExists(dbcon, tablename) -> bool:
     dbcur.close()
     return False
 
+def checkIfTablesAreFull(dbase):
+    dbcurso = dbase.cursor()
+    dbcurso.execute("""
+        SELECT COUNT(*)
+        FROM reddit.User
+        """)
+    if dbcurso.fetchone().count > 2:
+        sys.exit(0)
+    else:
+        pass
 
 # transfers the given Data to the SQL Server
 def DataToSQLServer(JSONFile, DatabaseAssistant, USER_ID):
