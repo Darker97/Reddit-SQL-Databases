@@ -57,14 +57,7 @@ public class GUI extends JFrame {
 		panel.add(comboBox);
 		
 		JButton btnSubmitt = new JButton("SUBMITT");
-		btnSubmitt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int number = comboBox.getSelectedIndex() + 1;
-				String text = txtSpecificUserSubreddit.getText();
-				//System.out.println("test: " + text +" " +number);
-				Logic.submittQuery(text, number, main);
-			}
-		});
+		
 		
 		txtSpecificUserSubreddit = new JTextField();
 		txtSpecificUserSubreddit.setText("add  specific user, subreddit or link");
@@ -90,5 +83,15 @@ public class GUI extends JFrame {
 				"Donec a dictum erat, nec dignissim purus. Praesent odio justo, consequat quis pretium in, efficitur nec eros. Nunc vel dolor rhoncus, pulvinar justo ac, tristique nibh. Phasellus posuere aliquet mi ac molestie. Sed ultrices mi id tempor placerat. Duis et lectus eu urna eleifend posuere vel et mi. Donec rutrum tincidunt ligula ultricies egestas. Phasellus nec tellus vestibulum, feugiat mauris nec, ultrices dui. Nullam eget mi viverra orci fringilla faucibus. Mauris ac blandit magna, a cursus arcu. ");
 		TextAnzeigeLösung.setAutoscrolls(true);
 		panel.add(sp);
+		
+		btnSubmitt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int number = comboBox.getSelectedIndex() + 1;
+				String text = txtSpecificUserSubreddit.getText();
+				//System.out.println("test: " + text +" " +number);
+				TextAnzeigeLösung.setText(Logic.submittQuery(text, number, main));
+				
+			}
+		});
 	}
 }
