@@ -24,6 +24,16 @@ public class GUI extends JFrame {
 	
 	public static void start(connector main){
 		//HERE BE GUI
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI frame = new GUI();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	};
 	
 	/**
