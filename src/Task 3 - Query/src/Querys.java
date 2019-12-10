@@ -1,6 +1,6 @@
 public class Querys {
 
-    public static String SELECT(){
+    public static String SELECT(String Input){
         return "";
     }
     public static String SELECT_SPECIFIC_USER(String USER){
