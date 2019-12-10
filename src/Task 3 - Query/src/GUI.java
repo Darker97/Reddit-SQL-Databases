@@ -1,20 +1,14 @@
+import org.w3c.dom.Text;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import java.awt.FlowLayout;
-import javax.swing.DefaultComboBoxModel;
 import java.awt.GridLayout;
-import javax.swing.JFormattedTextField;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import java.awt.Color;
 
 public class GUI extends JFrame {
@@ -42,7 +36,7 @@ public class GUI extends JFrame {
 	public GUI() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1153, 195);
+		setBounds(100, 100, 1153, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -78,11 +72,23 @@ public class GUI extends JFrame {
 		panel.add(txtSpecificUserSubreddit);
 		txtSpecificUserSubreddit.setColumns(25);
 		panel.add(btnSubmitt);
-		
-		JTextPane txtpnHierKommtDie = new JTextPane();
-		txtpnHierKommtDie.setForeground(new Color(0, 0, 0));
-		txtpnHierKommtDie.setEditable(false);
-		txtpnHierKommtDie.setText("Hier kommt die Lösung hin. Wenn wir sie haben...");
-		panel.add(txtpnHierKommtDie);
+
+		JTextArea TextAnzeigeLösung = new JTextArea("", 18, 90);
+		JScrollPane sp = new JScrollPane(TextAnzeigeLösung);
+		TextAnzeigeLösung.setForeground(new Color(0, 0, 0));
+		TextAnzeigeLösung.setEditable(false);
+		TextAnzeigeLösung.setText(" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus mattis sapien vel lectus elementum viverra. Phasellus tristique id nibh sit amet dictum. Duis non lobortis augue. Phasellus vestibulum odio quis lectus finibus, ut ornare mi accumsan. Nullam purus sapien, efficitur non metus at, suscipit pharetra ante. Proin ac libero non purus maximus facilisis. Vivamus sit amet viverra urna. In euismod fringilla dolor, sit amet sagittis eros interdum non. Integer efficitur felis at magna lobortis congue. In quis condimentum augue. Sed semper massa quis purus accumsan, a varius arcu scelerisque. Nullam diam est, porttitor at varius eget, facilisis ac mi.\n" +
+				"\n" +
+				"Fusce consequat lectus nisl, vitae faucibus ex porttitor quis. Vestibulum non laoreet erat. Aliquam mauris magna, eleifend sit amet fermentum sed, placerat sed neque. Mauris non felis id est venenatis finibus ac nec neque. Proin blandit risus lorem, eu gravida libero porttitor sed. Mauris a finibus sapien. Ut eget erat a tellus fringilla mollis non in nibh. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam sit amet lobortis nibh.\n" +
+				"\n" +
+				"Donec purus lectus, rutrum quis nibh at, fermentum condimentum mi. Sed vel risus sit amet sem vehicula tristique eu in orci. Aliquam suscipit elit leo, in ultricies leo cursus vitae. Aenean vulputate, sapien ac eleifend condimentum, turpis dolor ullamcorper ligula, id viverra tortor sem nec erat. Vestibulum faucibus leo vitae felis dignissim mattis. Sed vitae dolor ligula. Vivamus dignissim dignissim tristique.\n" +
+				"\n" +
+				"Suspendisse quam ante, suscipit ut libero sit amet, viverra laoreet lorem. Nullam sapien leo, tempor et lacus a, venenatis vulputate lectus. Phasellus non feugiat turpis. Sed ut dapibus quam. Quisque varius id lectus ac fringilla. Cras eu tempor ipsum. Suspendisse nec convallis turpis, non dignissim velit. Aliquam molestie, ex facilisis dignissim tristique, tortor elit elementum enim, id malesuada sem quam et dui.\n" +
+				"\n" +
+				"In quis ullamcorper est, dapibus scelerisque tortor. Etiam interdum tortor sit amet porttitor gravida. Nunc sodales ex et enim ultrices, id varius neque porttitor. Nunc tincidunt imperdiet sagittis. Etiam et mi vitae nulla vulputate volutpat at nec arcu. Nullam lectus nulla, tempus id fermentum tincidunt, rutrum a sem. Donec pharetra, urna ac malesuada molestie, magna elit semper mauris, in facilisis ipsum risus id tortor. Mauris mattis ac eros ut ultricies. Sed tristique aliquam ante, congue euismod orci tincidunt eget. Morbi placerat libero vitae augue iaculis tempus. Vestibulum in elit id sapien lobortis aliquet. Suspendisse placerat suscipit nulla in lobortis. Cras pharetra mollis massa, sit amet placerat tellus laoreet vitae. Etiam non consectetur ipsum, sit amet scelerisque lectus. Etiam tincidunt turpis at ante malesuada vulputate. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n" +
+				"\n" +
+				"Donec a dictum erat, nec dignissim purus. Praesent odio justo, consequat quis pretium in, efficitur nec eros. Nunc vel dolor rhoncus, pulvinar justo ac, tristique nibh. Phasellus posuere aliquet mi ac molestie. Sed ultrices mi id tempor placerat. Duis et lectus eu urna eleifend posuere vel et mi. Donec rutrum tincidunt ligula ultricies egestas. Phasellus nec tellus vestibulum, feugiat mauris nec, ultrices dui. Nullam eget mi viverra orci fringilla faucibus. Mauris ac blandit magna, a cursus arcu. ");
+		TextAnzeigeLösung.setAutoscrolls(true);
+		panel.add(sp);
 	}
 }
