@@ -1,5 +1,6 @@
-
-    // HERE BE CONNECTOR OBJECT
+/**
+ * Here be Connector Object
+  */
 public class connector {
 
     connector(){
