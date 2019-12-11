@@ -1,7 +1,7 @@
 #querys
 1. How many comments have a specific user posted? <!--Wie sieht man welcher user den Kommentar geschrieben hat?-->
 
-2. How many comments does a specific subreddit get per day?
+2. How many comments does a specific subreddit get per day? <!--pro Tag??!-->
 
 
 **select count**(link-id) as amount **from** comments **where** link-id = ''; 
@@ -20,6 +20,10 @@ scores)
 
 6. Which subreddits have the highest and lowest scored comments?
 
+
+select subreddit from comments join subreddits on subreddit.subbredit-id = comments.parent-id as mix where max((select sum(score)from mix) as MAX and min((select sum(score)from mix) as MIN 
+
+select sum(score) as sumScore from comments
 
 **select max**(score) as max **from** comments; 
 
