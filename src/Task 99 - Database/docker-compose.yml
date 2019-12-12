@@ -23,13 +23,6 @@ services:
       - "db:database"
     image: tablescreater:0.1
 
-  Tablefiller:
-    links:
-      - "db:database"
-    volumes:
-    - db_inport: /Data
-    image: tablefiller:0.1
-
 
 networks:
   main:
