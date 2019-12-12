@@ -45,4 +45,7 @@ public class connector {
         }
         return null;
     }
+    public Connection getCon(){
+        return this.con;
+    }
 }
