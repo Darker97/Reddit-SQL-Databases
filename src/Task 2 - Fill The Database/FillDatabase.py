@@ -59,12 +59,12 @@ def main():
 # ------------------------------------------------ #
 # Checks if the Connection is established. If not, we wait.
 def startFile():
-    time.sleep(20)
+    time.sleep(10)
     try:
         data = main()
         if data.is_connected():
             if checkTableExists(data, "users"):
-                checkIfTablesAreFull(data)
+                # checkIfTablesAreFull(data)
                 createData(data)
                 print("------------------------------------------------------")
                 print("Data is inserted")
@@ -76,11 +76,12 @@ def startFile():
                 time.sleep(60)
                 print("Trying again")
                 print("------------------------------------------------------")
-    except:
+    except Exception as e:
         print("------------------------------------------------------")
         print("Connection is not established!")
+        print(e)
         print("Proceeding...")
-        time.sleep(60)
+        time.sleep(10)
         print("Trying again")
         print("------------------------------------------------------")
         startFile()
@@ -104,7 +105,7 @@ def checkIfTablesAreFull(dbase):
     dbcurso = dbase.cursor()
     dbcurso.execute("""
         SELECT COUNT(*)
-        FROM reddit.User
+        FROM Reddit.User
         """)
     if dbcurso.fetchone().count > 2:
         sys.exit(0)
