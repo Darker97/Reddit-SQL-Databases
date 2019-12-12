@@ -46,7 +46,7 @@ public class Querys {
      * @return
      */
     public static String SELECT_SUB_BY_LINK(String Link){
-    	String query = "";
+    	String query = "select comments.user, subreddits.subreddit from comments join subreddits on subreddits.id = comments.subreddit_id where select(comments.users from comments where link-id = '"+ Link +"') = comments.users;";
         return "";
     }
 
@@ -55,8 +55,9 @@ public class Querys {
      * @param USER
      * @return
      */
+    //user muss noch gelöscht werden!!
     public static String SELECT_SCORE_BY_USER(String USER){
-    	String query = "";
+    	String query = "select user, min(combination.result), max(combination.result) from combination where (select sum(ups) as combination.result from comments group by users) as combination;";
         return "";
     }
 
