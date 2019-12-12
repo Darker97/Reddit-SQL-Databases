@@ -26,11 +26,9 @@ services:
   Tablefiller:
     links:
       - "db:database"
-    image: tablefiller:0.1
     volumes:
-      - type: bind
-          source: ./data
-          target: ./data
+    - db_inport: /Data
+    image: tablefiller:0.1
 
 
 networks:

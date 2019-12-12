@@ -2,3 +2,6 @@
 /.vscode/
 /.github/
 /src/Task 2 - Fill The Database/Data/
+*.DS_Store
+*.class
+*.tar
