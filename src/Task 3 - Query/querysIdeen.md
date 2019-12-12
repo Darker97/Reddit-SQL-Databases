@@ -17,6 +17,8 @@ select count(id) as amount from comments where user ='';
 
 4. Users that commented on a specific link has also posted to which subreddits?
 
+select comments.user, subreddits.subreddit from comments join subreddits on subreddits.id = comments.subreddit_id where link-id = 
+
 5. Which users have the highest and lowest combined scores? (combined as the sum of all
 scores)
 
