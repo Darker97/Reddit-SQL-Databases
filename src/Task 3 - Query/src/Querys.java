@@ -78,7 +78,7 @@ public class Querys {
      * @return
      */
     public static String SELECT_CONTACTED_USERS(String USER){
-    	String query = "";
+    	String query = "select user from comments where link = (select link from comments where user = '"+ USER +"');";
         return "";
     }
 
@@ -87,7 +87,7 @@ public class Querys {
      * @return
      */
     public static String SELECT_USER_ONLY_COMMETED_ONCE(){
-    	String query = "";
+    	String query = "select user from comments group by id having count(id) = 1;";
         return "";
     }
 }
