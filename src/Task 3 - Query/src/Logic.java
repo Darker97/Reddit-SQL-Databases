@@ -1,3 +1,6 @@
+import java.sql.*;
+
+
 public class Logic{
 	
   public static String submittQuery(String specific, int queryType, connector main) {
@@ -25,8 +28,19 @@ public class Logic{
 	  return answer(question, main);
   }
   
-  private static String answer(String question, connector main){
-	main.
+  private static String answer(String question, connector con){
+	String temp = "";
+	try {
+		Statement sm = con.getCon().createStatement();
+		ResultSet rs = sm.executeQuery(question);
+		while (rs.next()){
+			temp += rs.getString(0);
+		}
+	}catch (SQLException e) {
+		e.printStackTrace();
+	}
+
+	return temp;
   }
 
 }
