@@ -26,6 +26,8 @@ services:
   Tablefiller:
     links:
       - "db:database"
+    volumes:
+    - db_inport: /Data
     image: tablefiller:0.1
 
 

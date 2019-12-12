@@ -120,16 +120,17 @@ def DataToSQLServer(JSONFile, DatabaseAssistant, USER_ID):
     body = str(JSONFile["body"])
     ups = str(JSONFile["ups"])
     downs = str(JSONFile["downs"])
-    created =  str(JSONFile["created_utc"])
+    created = str(JSONFile["created_utc"])
     conttiversiality = str(JSONFile["controversiality"])
     Archived = JSONFile["archived"]
     USER =  str(JSONFile["author"])
-    SUBREDDIT =  str(JSONFile["subreddit_id"])
+    SUBREDDIT =  str(JSONFile["subreddit"])
+    Subbredit_ID = str(JSONFile["subreddit_id"])
 
-    querySubreddits = """INSERT INTO Reddit.Subreddits (Name) 
-                            VALUES (%s)"""
+    querySubreddits = """INSERT INTO Reddit.Subreddits (Name, Subreddit_id) 
+                            VALUES (%s, %s)"""
     try:
-        DatabaseAssistant.cursor().execute(querySubreddits, (SUBREDDIT,))
+        DatabaseAssistant.cursor().execute(querySubreddits, (SUBREDDIT, Subbredit_ID))
     except:
         # print("----------------->DOUBLE SUP")
         pass
