@@ -15,7 +15,7 @@ public class Querys {
      * @return
      */
     public static String SELECT_SPECIFIC_USER(String USER){
-    	String query = "";
+    	String query = "select count(id) as amount from comments where user ='"+ USER + "';";
         return "";
     }
 
@@ -67,7 +67,7 @@ public class Querys {
      */
     //not sure about this one 
     public static String SELECT_HIGHEST_COMMENTS_BY_SUB(String SUB){
-    	String query = "select subreddit from comments join subreddits on subreddit.subbredit-id = comments.parent-id as mix where max((select sum(score)from mix) as MAX and min((select sum(score)from mix) as MIN";
+    	String query = "select subreddit from comments join subreddits on subreddit.subbredit-id = comments.parent-id as mix where max((select sum(ups)from mix) as MAX and min((select sum(ups)from mix) as MIN";
         return "";
     }
 
