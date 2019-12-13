@@ -82,7 +82,8 @@ def main():
     database = File.pop(0)
 
     print("------------------------------------------------------")
-    print("Connecting to Database: " + host + " as " + user + " on port " + port)
+    print("Connecting to Database: " + host 
+        + " as " + user + " on port " + port)
     print("Password: " + passwd)
     print("------------------------------------------------------")
 
@@ -113,9 +114,16 @@ CREATE TABLE IF NOT EXISTS `Reddit`.`Comments`
 `USER` VARCHAR(128) NULL,
 `SUBREDDIT` VARCHAR(128) NULL, PRIMARY KEY (`ID`));
 
-CREATE TABLE IF NOT EXISTS `Reddit`.`Subreddits` (`Name` VARCHAR(48) NOT NULL, `Subreddit_id` VARCHAR(48) NOT NULL, PRIMARY KEY (`Subreddit_id`));
+CREATE TABLE IF NOT EXISTS `Reddit`.`Subreddits` 
+(`Name` VARCHAR(48) NOT NULL, 
+`Subreddit_id` VARCHAR(48) NOT NULL, 
+PRIMARY KEY (`Subreddit_id`));
 
-CREATE TABLE IF NOT EXISTS `Reddit`.`User` (`ID` INT NOT NULL,`Name` VARCHAR(45) NOT NULL,PRIMARY KEY (`Name`),UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+CREATE TABLE IF NOT EXISTS `Reddit`.`User` 
+(`ID` INT NOT NULL,
+`Name` VARCHAR(45) NOT NULL,
+PRIMARY KEY (`Name`),
+UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
 
 ```
 
