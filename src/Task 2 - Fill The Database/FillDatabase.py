@@ -59,7 +59,7 @@ def main():
 # ------------------------------------------------ #
 # Checks if the Connection is established. If not, we wait.
 def startFile():
-    time.sleep(10)
+    # time.sleep(10)
     try:
         data = main()
         if data.is_connected():
@@ -68,6 +68,7 @@ def startFile():
                 createData(data)
                 print("------------------------------------------------------")
                 print("Data is inserted")
+                data.close()
                 print("------------------------------------------------------")
             else:
                 print("------------------------------------------------------")
@@ -126,30 +127,35 @@ def DataToSQLServer(JSONFile, DatabaseAssistant, USER_ID):
     Archived = JSONFile["archived"]
     USER =  str(JSONFile["author"])
     SUBREDDIT =  str(JSONFile["subreddit"])
-    Subbredit_ID = str(JSONFile["subreddit_id"])
+    subreddit_id = str(JSONFile["subreddit_id"])
 
     querySubreddits = """INSERT INTO Reddit.Subreddits (Name, Subreddit_id) 
-                            VALUES (%s, %s)"""
+                            VALUES (%s, %s);"""
     try:
-        DatabaseAssistant.cursor().execute(querySubreddits, (SUBREDDIT, Subbredit_ID))
-    except:
-        # print("----------------->DOUBLE SUP")
+        DatabaseAssistant.cursor().execute(querySubreddits, (SUBREDDIT, subreddit_id))
+        DatabaseAssistant.commit()
+    except Exception as e:
+        # print(e)
         pass
     queryComments ="""INSERT INTO Reddit.Comments (ID, name, parentID, body ,ups ,downs , created, conttiversiality, Archived ,USER, SUBREDDIT) 
-                        VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+                        VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"""
 
     try:
         DatabaseAssistant.cursor().execute(queryComments, (ID, name, parentID, body, ups, downs, created, conttiversiality, Archived, USER, SUBREDDIT))
-    except:
+        DatabaseAssistant.commit()
+    except Exception as e:
+        print(e)
         # print("----------------->DOUBLE COMMENTS<-----------------")
         pass
     USER_ID += 1
 
     queryUsers = """INSERT INTO Reddit.User (ID, Name) 
-                        VALUES (%s,%s)"""
+                        VALUES (%s,%s);"""
     try:
         DatabaseAssistant.cursor().execute(queryUsers, (str(USER_ID), USER))
-    except:
+        DatabaseAssistant.commit()
+    except Exception as e:
+        # print(e)
         # print("----------------->DOUBLEUSER")
         pass
 # ------------------------------------------------ #
