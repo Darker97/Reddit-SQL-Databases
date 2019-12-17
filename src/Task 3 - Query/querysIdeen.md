@@ -23,12 +23,12 @@ select comments.user, subreddits.subreddit from comments join subreddits on subr
 scores)
 
 
-select user, min(combination.result), max(combination.result) from combination where (select sum(ups) as combination.result from comments group by users) as combination;
+select user, min(combination.result), max(combination.result) from combination where (select sum(ups) as result from comments group by users) as combination;
 
 6. Which subreddits have the highest and lowest scored comments?
 
 
-select subreddit from comments join subreddits on subreddit.subbredit-id = comments.parent-id as mix where max((select sum(ups)from mix) as MAX and min((select sum(sups)from mix) as MIN 
+(select subreddit as highest from comments join subreddits on subreddit.subbredit-id = comments.parent-id where max(ups)) UNION (select subreddit as lowest from comments join subreddits on subreddit.subbredit-id = comments.parent-id where min(ups)) 
 
 <!--select sum(score) as sumScore from comments
 
