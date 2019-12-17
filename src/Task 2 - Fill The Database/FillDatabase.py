@@ -8,7 +8,7 @@ import sys
 def createData(Assistant):
     # Load the Data from the Source Folder
     Files = []
-    Files.append(open("./Data/RC_2007-10"))
+    # Files.append(open("./Data/RC_2007-10"))
     Files.append(open("./Data/RC_2011-07"))
     Files.append(open("./Data/RC_2012-12"))
 
