@@ -37,6 +37,23 @@ public class GUI extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1153, 500);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(UIManager.getColor("Table.focusCellForeground"));
+		setJMenuBar(menuBar);
+		
+		JMenu mnOptions = new JMenu("Options");
+		menuBar.add(mnOptions);
+		
+		JMenuItem mntmMadeBy = new JMenuItem("Made by ");
+		mntmMadeBy.setBackground(Color.GRAY);
+		mnOptions.add(mntmMadeBy);
+		
+		JCheckBoxMenuItem chckbxmntmCarolinBrckmann = new JCheckBoxMenuItem("Carolin Brückmann");
+		mnOptions.add(chckbxmntmCarolinBrckmann);
+		
+		JCheckBoxMenuItem chckbxmntmChristianBaltzer = new JCheckBoxMenuItem("Christian Baltzer");
+		mnOptions.add(chckbxmntmChristianBaltzer);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -67,6 +84,7 @@ public class GUI extends JFrame {
 		panel.add(btnSubmitt);
 
 		JTextArea TextAnzeigeLösung = new JTextArea("", 18, 90);
+		TextAnzeigeLösung.setLineWrap(true);
 		JScrollPane sp = new JScrollPane(TextAnzeigeLösung);
 		TextAnzeigeLösung.setForeground(new Color(0, 0, 0));
 		TextAnzeigeLösung.setEditable(false);
