@@ -2,7 +2,12 @@ import java.sql.*;
 
 import javax.swing.JOptionPane;
 
-
+/*  
+ *  He's making a database 
+ *  He's sorting it twice 
+ *  SELECT * from contacts WHERE behaviour = 'nice' 
+ *  SQL Clause is coming to town
+ */
 
 public class Logic{
 	
@@ -61,3 +66,4 @@ public class Logic{
   }
 
 }
+
