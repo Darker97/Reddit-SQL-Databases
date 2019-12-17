@@ -29,8 +29,11 @@ public class connector {
         String username = arr.get(2);
         String password = arr.get(3);
         String database = arr.get(4);
+        String finalURL = "jdbc:mysql://" + url + ":" + port.toString() + "/" + database + "?allowPublicKeyRetrieval=true&useSSL=false" ;
         
-        String finalURL = "jdbc:mysql://" + url + ":" + port.toString() + "/" + database ;
+        System.out.println("Connecting to:     " + finalURL
+        		+ "\n" + " With Password: " + password
+        		+ "\n" + " With Username: " + username);
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
