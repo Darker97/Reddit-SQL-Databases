@@ -41,8 +41,14 @@ select subreddit from comments join subreddits on subreddit.subbredit-id = comme
 7. Given a specific user, list all the users he or she has potentially interacted with (i.e., everyone
 who as commented on a link that the specific user has commented on).
 
+
+-old:
 select user from comments where link = (select link from comments where user = 'user');
+
+
+-new:
+select USER from comments group by link-id having USER = 'user';
 
 8. Which users has only posted to a single subreddit?
 
-select user from comments group by id having count(id) = 1;
+select USER from comments group by USER having count(link-id) = 1;
