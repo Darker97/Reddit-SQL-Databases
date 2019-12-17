@@ -55,19 +55,24 @@ volumes:
 The Data from the final DB is stored in a Volume called *db_data*. 
 
 The originial Plan was to deploy another container called *DB_filler*. We had to change Plans, because Containers have a size limit of 10 GB. We would have needed a container of roughly 25 GB. 
-We then decided to run that container seperatly as a normal Python script.
+We then decided to run that container seperatly as a normal Python script, which takes some time, but works perfectly.
 
 
 ### The Database
-To make our DB usebull on many different Systems, we decided to use Docker for the Deployment.
-The DB itself is a MySQL-Database with a Volume. 
+To make our DB usefull on many different Systems, we decided to use Docker for the Deployment.
+The DB itself is a MySQL-Database with an attached volume to store the data. 
 
 #### Internal Structure
-
+Inside of the Database are three Tables. 
 
 ### The Tablecreater
+The Tablecreater is a small docker container, containing python 3.7 and a small Python Script. The Script will try to connect to the DB and create the needed Tables. If this fails, the Script will wait for 60 seconds and then try again.
+
+### The DB Filler
+The DB Filler is another Python script that will take the Files, extract the Data and then transfer it into the needed Querys. It will then send these to the DB.
+
+### The GUI
+For the purpose of simplicity we use a GUI, written in JAVA.
+![Picture of the JAVA GUI](./GUI.png)
 
 
-
-### The Database
-Inside of the Database are three Tables. 

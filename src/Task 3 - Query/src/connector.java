@@ -4,25 +4,41 @@ import java.sql.*;
 import java.util.Scanner;
 import java.util.List;
 import java.util.*;
+import com.mysql.jdbc.Driver;
 
 /**
  * Here be Connector Object
   */
 public class connector {
 
-    connector(){
-        Connection con = connect();
-    }
+	public Connection con;
+	
+	public connector() {
+		this.con = connect();
+	}
+	
+
 
 
     private Connection connect(){
         List<String> arr = getCredentials();
+        System.out.println("Starting Connection");
+        
+        String url = arr.get(0);
+        String port = arr.get(1);
+        String username = arr.get(2);
+        String password = arr.get(3);
+        String database = arr.get(4);
+        
+        String finalURL = "jdbc:mysql://" + url + ":" + port.toString() + "/" + database ;
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(arr.get(0)+":"+arr.get(1), arr.get(2), arr.get(3));
+            Connection con = DriverManager.getConnection(finalURL, username, password);
             return con;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            System.exit(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,6 +62,6 @@ public class connector {
         return null;
     }
     public Connection getCon(){
-        return this.con;
+         return this.con;
     }
 }

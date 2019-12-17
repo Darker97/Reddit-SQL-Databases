@@ -1,6 +1,7 @@
 import java.sql.*;
 
 
+
 public class Logic{
 	
   public static String submittQuery(String specific, int queryType, connector main) {
