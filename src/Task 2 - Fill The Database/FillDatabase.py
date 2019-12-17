@@ -8,7 +8,7 @@ import sys
 def createData(Assistant):
     # Load the Data from the Source Folder
     Files = []
-    # Files.append(open("./Data/RC_2007-10"))
+    Files.append(open("./Data/RC_2007-10"))
     Files.append(open("./Data/RC_2011-07"))
     Files.append(open("./Data/RC_2012-12"))
 
@@ -128,6 +128,7 @@ def DataToSQLServer(JSONFile, DatabaseAssistant, USER_ID):
     USER =  str(JSONFile["author"])
     SUBREDDIT =  str(JSONFile["subreddit"])
     subreddit_id = str(JSONFile["subreddit_id"])
+    LinkID = str(JSONFile["link_id"])
 
     querySubreddits = """INSERT INTO Reddit.Subreddits (Name, Subreddit_id) 
                             VALUES (%s, %s);"""
@@ -137,11 +138,11 @@ def DataToSQLServer(JSONFile, DatabaseAssistant, USER_ID):
     except Exception as e:
         # print(e)
         pass
-    queryComments ="""INSERT INTO Reddit.Comments (ID, name, parentID, body ,ups ,downs , created, conttiversiality, Archived ,USER, SUBREDDIT) 
-                        VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"""
+    queryComments ="""INSERT INTO Reddit.Comments (ID, name, parentID, body ,ups ,downs , created, conttiversiality, Archived ,USER, SUBREDDIT, LinkID) 
+                        VALUES ( %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"""
 
     try:
-        DatabaseAssistant.cursor().execute(queryComments, (ID, name, parentID, body, ups, downs, created, conttiversiality, Archived, USER, SUBREDDIT))
+        DatabaseAssistant.cursor().execute(queryComments, (ID, name, parentID, body, ups, downs, created, conttiversiality, Archived, USER, SUBREDDIT, LinkID))
         DatabaseAssistant.commit()
     except Exception as e:
         print(e)
