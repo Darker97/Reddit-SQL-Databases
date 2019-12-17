@@ -49,8 +49,11 @@ WHERE lecturer != ‚ILIR‘
 $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) $$
 
 ## Task 2: FDs and Normalization
-1. *Functional Dependencies* \ 
-		We have two FDs. 
+1. *Functional Dependencies* 
+
+
+**We have multiple FDs.**
+
 
 		room time day -> manager 
 
@@ -58,8 +61,7 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 		
 		--> room time day --> manager applicant 
 		
-		*or more?*
-		
+     **or more?**		
   		manager day -> room
 		
 		manager applicant day -> room time
@@ -67,11 +69,24 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 		room time day -> manager applicant
 		
 		applicant day -> room manager time 
-1. *Find the Keys* 
-Primary Key: room, time, day 
-Super Keys: 1. room, time, day, applicant 2. room, time, day, manager 3. room, time, day, manager, applicant 
-1. *Show the relations is in 3NF but not in BCNF* 
-The manager and the applicant are independent from one another therefore the relation is in 3NF. <!--Beweis das es nicht in BCNF ist fehlt noch--> 
+1. *Find the Keys* 	
+
+		Primary Key: room, time, day 
+
+
+		Super Keys: 
+
+		* room, time, day, applicant 
+		* room, time, day, manager 
+		* room, time, day, manager, applicant 
+
+1. *Show the relations is in 3NF but not in BCNF*
+
+ 
+        The manager and the applicant are independent from one another therefore the relation is in 3NF. 
+
+
+<!--Beweis das es nicht in BCNF ist fehlt noch--> 
 1. *Decompose the Relations that are in BCNF*
 1. *Draw an E/R-Diagram that describes the System.*
 
@@ -128,3 +143,5 @@ We can safely ignore keys not mentioned here.
 ```
 
 
+##Task 4: Importing data
+##task 5: Queries
