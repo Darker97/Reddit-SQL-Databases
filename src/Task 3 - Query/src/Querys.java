@@ -142,8 +142,8 @@ public class Querys {
      * @return
      */
     public static String SELECT_USER_ONLY_COMMETED_ONCE(){
-    	String query = "select USER" + 
-    			"from Comments" + 
+    	String query = "select USER " + 
+    			"from Comments " + 
     			"group by USER having count(linkID) = 1;";
         return query;
     }
