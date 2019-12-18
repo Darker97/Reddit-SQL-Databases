@@ -81,9 +81,28 @@ public class Querys {
     //user muss noch gelöscht werden!!
     //?
     public static String SELECT_SCORE_BY_USER(String USER){
-    	String query = "select user, min(combination.result), max(combination.result) " +
-                "from combination " +
-                "where (select sum(ups) as result from Comments group by users) as combination;";
+    	String query = "" + 
+    			"Select test.USER, test.Summe " + 
+    			"from" + 
+    			"	(Select USER, sum(ups) as Summe " + 
+    			"		from Comments " + 
+    			"        group by USER) as test " + 
+    			"join" + 
+    			"    (" + 
+    			"		(select max(Summe) as Summe " + 
+    			"			from (" + 
+    			"				Select USER, sum(ups) as Summe " + 
+    			"				from Comments " + 
+    			"				group by USER)" + 
+    			"			as Scores)" + 
+    			"		union" + 
+    			"			(select min(Summe) as Summe " + 
+    			"			from (" + 
+    			"				Select USER, sum(ups) as Summe" + 
+    			"				from Comments" + 
+    			"				group by USER)" + 
+    			"			as Scores)" + 
+    			"    )as dumm on test.Summe = dumm.Summe;";
         return query;
     }
 
@@ -95,14 +114,14 @@ public class Querys {
      */
     //not sure about this one 
     public static String SELECT_HIGHEST_COMMENTS_BY_SUB(String SUB){
-    	String query = "Select SUBREDDIT, ups as SCORE" + 
+    	String query = "Select SUBREDDIT, ups as SCORE " + 
     			"from Comments" + 
     			"where ups in (" + 
     			"	select MIN(ups)" + 
     			"    from Comments" + 
     			") UNION " + 
     			"Select SUBREDDIT, ups from Comments where ups in(" + 
-    			"	select MAX(ups)" + 
+    			"	select MAX(ups) " + 
     			"    from Comments" + 
     			");";
         return query;
