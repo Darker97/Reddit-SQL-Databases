@@ -17,10 +17,10 @@ select count(id) as amount from comments where user ='';
 
 4. Users that commented on a specific link has also posted to which subreddits?
 
-select distinct Reddit.Comments.SUBREDDIT
-from Reddit.Comments join (select distinct Reddit.Comments.USER 
-from Reddit.Comments join Reddit.Subreddits on Reddit.Subreddits.Name = Reddit.Comments.SUBREDDIT 
-where linkID = 't3_2zrn9')as test on Reddit.Comments.USER = Reddit.test.USER;
+select distinct Comments.SUBREDDIT
+from Comments join (select distinct Comments.USER 
+from Comments join Subreddits on Subreddits.Name = Comments.SUBREDDIT 
+where linkID = 't3_2zrn9')as test on Comments.USER = test.USER;
 
 5. Which users have the highest and lowest combined scores? (combined as the sum of all
 scores)
