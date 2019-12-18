@@ -57,7 +57,7 @@ public class Querys {
         return query;
     }
 
-    /** TODO: BUG FIXING
+    /** TODO: BUG FIXING but finished 
      * Task 4
      * @param Link
      * @return
@@ -88,16 +88,23 @@ public class Querys {
     }
 
     /**
-     * TODO: BUG FIXING - SYNTAX ERROR
+     * 
      * Task 6
      * @param SUB
      * @return
      */
     //not sure about this one 
     public static String SELECT_HIGHEST_COMMENTS_BY_SUB(String SUB){
-    	String query = "select subreddit " +
-                "from Comments join subreddits on subreddit.subbredit_id = Comments.parent_id as mix " +
-                "where max((select sum(ups)from mix) as MAX and min((select sum(ups)from mix) as MIN))";
+    	String query = "Select SUBREDDIT, ups as SCORE" + 
+    			"from Comments" + 
+    			"where ups in (" + 
+    			"	select MIN(ups)" + 
+    			"    from Comments" + 
+    			") UNION " + 
+    			"Select SUBREDDIT, ups from Comments where ups in(" + 
+    			"	select MAX(ups)" + 
+    			"    from Comments" + 
+    			");";
         return query;
     }
 
