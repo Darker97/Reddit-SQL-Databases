@@ -45,12 +45,8 @@ select user, min(combination.result), max(combination.result) from combination w
 who as commented on a link that the specific user has commented on).
 
 
--old:
-select user from comments where link = (select link from comments where user = 'user');
+select distinct USER from Reddit.Comments where linkID in (select linkID from Reddit.Comments where USER = 'gaso');
 
-
--new:
-select USER from comments group by link-id having USER = 'user';
 
 8. Which users has only posted to a single subreddit?
 
