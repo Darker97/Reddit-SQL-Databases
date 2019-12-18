@@ -29,9 +29,18 @@ public class Querys {
      */
     //Pro Tag!!!! -> created-utc
     public static String SELECT_COMMENTS_SPECIFIC_SUB(String SUB){
-    	String query = "select count(SUBREDDIT) as amount " +
-                "from Comments " +
-                "where SUBREDDIT = '"+SUB+"'";
+    	String query = "Select avg(allPerDay.Anzahl)" + 
+    			"from (" + 
+    			"	Select SUBREDDIT, count(WRITTEN_ON) as Anzahl" + 
+    			"		FROM (" + 
+    			"			SELECT SUBREDDIT, round((created / 60 / 60 / 24), 0) as WRITTEN_ON " + 
+    			"			FROM Reddit.Comments" + 
+    			"			where SUBREDDIT = '" + SUB + "'" + 
+    			"			ORDER by WRITTEN_ON" + 
+    			"		) AS daylight" + 
+    			"	group by WRITTEN_ON" + 
+    			") as allPerDay" + 
+    			";";
         return query;
     }
 
