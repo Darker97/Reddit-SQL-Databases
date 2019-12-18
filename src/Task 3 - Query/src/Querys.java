@@ -54,26 +54,25 @@ public class Querys {
     	String query = "select count(body) as amount " +
                 "from Comments " +
                 "where body like '%lol%'";
+    	
         return query;
     }
 
-    /** TODO: BUG FIXING but finished 
+    /** TODO: Testen bitte
      * Task 4
      * @param Link
      * @return
      */
     public static String SELECT_SUB_BY_LINK(String Link){
-    	String query = "select Comments.user, subreddits.subreddit " +
-                "from Comments join subreddits on subreddits.id = Comments.SUBREDDIT " +
-                "where(select" +
-                    "Comments.users " +
-                    "from Comments " +
-                    "where link-id = '"+ Link +"') IN Comments.users;";
+    	String query = "select distinct Comments.SUBREDDIT" + 
+    			"from Comments join (select distinct Comments.USER " + 
+    			"from Comments join Subreddits on Subreddits.Name = Comments.SUBREDDIT " + 
+    			"where linkID = '"+ Link + "')as test on Comments.USER = test.USER;";
         return query;
     }
 
     /**
-     * TODO: BUG FIXING - SYNTAX ERROR
+     * 
      * Task 5
      * @param USER
      * @return
@@ -128,14 +127,13 @@ public class Querys {
     }
 
     /**
-     * TODO: link_ID einbauen
+     * TODO: testen
      * Task 7
      * @param USER
      * @return
      */
     public static String SELECT_CONTACTED_USERS(String USER){
-    	String query = "select user " +
-                "from Comments where parentID IN (select parentID from Comments where user = '"+ USER +"');";
+    	String query = "select distinct USER from Reddit.Comments where linkID in (select linkID from Reddit.Comments where USER = '"+ USER +"');";
         return query;
     }
 
