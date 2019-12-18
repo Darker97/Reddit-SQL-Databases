@@ -29,9 +29,18 @@ public class Querys {
      */
     //Pro Tag!!!! -> created-utc
     public static String SELECT_COMMENTS_SPECIFIC_SUB(String SUB){
-    	String query = "select count(SUBREDDIT) as amount " +
-                "from Comments " +
-                "where SUBREDDIT = '"+SUB+"'";
+    	String query = "Select avg(allPerDay.Anzahl)" + 
+    			"from (" + 
+    			"	Select SUBREDDIT, count(WRITTEN_ON) as Anzahl" + 
+    			"		FROM (" + 
+    			"			SELECT SUBREDDIT, round((created / 60 / 60 / 24), 0) as WRITTEN_ON " + 
+    			"			FROM Reddit.Comments" + 
+    			"			where SUBREDDIT = '" + SUB + "'" + 
+    			"			ORDER by WRITTEN_ON" + 
+    			"		) AS daylight" + 
+    			"	group by WRITTEN_ON" + 
+    			") as allPerDay" + 
+    			";";
         return query;
     }
 
@@ -48,7 +57,7 @@ public class Querys {
         return query;
     }
 
-    /** TODO: BUG FIXING
+    /** TODO: BUG FIXING but finished 
      * Task 4
      * @param Link
      * @return
@@ -72,23 +81,49 @@ public class Querys {
     //user muss noch gelöscht werden!!
     //?
     public static String SELECT_SCORE_BY_USER(String USER){
-    	String query = "select user, min(combination.result), max(combination.result) " +
-                "from combination " +
-                "where (select sum(ups) as result from Comments group by users) as combination;";
+    	String query = "" + 
+    			"Select test.USER, test.Summe " + 
+    			"from" + 
+    			"	(Select USER, sum(ups) as Summe " + 
+    			"		from Comments " + 
+    			"        group by USER) as test " + 
+    			"join" + 
+    			"    (" + 
+    			"		(select max(Summe) as Summe " + 
+    			"			from (" + 
+    			"				Select USER, sum(ups) as Summe " + 
+    			"				from Comments " + 
+    			"				group by USER)" + 
+    			"			as Scores)" + 
+    			"		union" + 
+    			"			(select min(Summe) as Summe " + 
+    			"			from (" + 
+    			"				Select USER, sum(ups) as Summe" + 
+    			"				from Comments" + 
+    			"				group by USER)" + 
+    			"			as Scores)" + 
+    			"    )as dumm on test.Summe = dumm.Summe;";
         return query;
     }
 
     /**
-     * TODO: BUG FIXING - SYNTAX ERROR
+     * 
      * Task 6
      * @param SUB
      * @return
      */
     //not sure about this one 
     public static String SELECT_HIGHEST_COMMENTS_BY_SUB(String SUB){
-    	String query = "select subreddit " +
-                "from Comments join subreddits on subreddit.subbredit_id = Comments.parent_id as mix " +
-                "where max((select sum(ups)from mix) as MAX and min((select sum(ups)from mix) as MIN))";
+    	String query = "Select SUBREDDIT, ups as SCORE " + 
+    			"from Comments" + 
+    			"where ups in (" + 
+    			"	select MIN(ups)" + 
+    			"    from Comments" + 
+    			") UNION " + 
+    			"Select SUBREDDIT, ups from Comments where ups in(" + 
+    			"	select MAX(ups) " + 
+    			"    from Comments" + 
+    			");";
         return query;
     }
 
