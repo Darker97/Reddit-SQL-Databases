@@ -1,5 +1,7 @@
+import java.awt.event.WindowEvent;
 import java.sql.*;
 
+import javax.swing.*;
 import javax.swing.JOptionPane;
 
 /*  
@@ -11,6 +13,9 @@ import javax.swing.JOptionPane;
 
 public class Logic{
 	
+  /**
+   * @wbp.parser.entryPoint
+   */
   public static String submittQuery(String specific, int queryType, connector main) {
 	//TEST
 	  //System.out.println("test: " + specific + " " + queryType);	
@@ -46,6 +51,9 @@ public class Logic{
   
   private static String answer(String question, connector con){
 	String temp = "";
+	
+	JFrame frame = WaitingScreen();
+	
 	try {
 		Statement sm = con.getCon().createStatement();
 		ResultSet rs = sm.executeQuery(question);
@@ -61,9 +69,22 @@ public class Logic{
 			    JOptionPane.ERROR_MESSAGE);
 		e.printStackTrace();
 	}
-
+	frame.setVisible(false);
+	frame.dispose();
 	return temp;
   }
 
+  private static JFrame WaitingScreen() {
+	  JFrame frame = new JFrame("Waiting");
+
+	    ImageIcon loading = new ImageIcon("./christmasparrot.gif");
+	    frame.getContentPane().add(new JLabel("", loading, JLabel.CENTER));
+
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setSize(400, 300);
+	    frame.setLocationRelativeTo(null);
+	    frame.setVisible(true);
+		return frame;
+  }
 }
 
