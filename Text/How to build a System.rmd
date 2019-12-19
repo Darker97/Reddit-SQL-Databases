@@ -1,0 +1,73 @@
+# How to build a System
+
+## The Structure
+
+To build up our Database System (DB), we had to solve some specifications. 
+Because we were working on to different Workstations, our Database had to be easy deployabal, so we could use it on different Systems.
+The System should also be easy to modify and should build the ground Structures, such as tables by itself. We should also have no Problems with Networking connections.
+
+Because of these Requirments, we came up with a Docker solution. 
+
+![](./System-Structure.png)
+
+Inside the Docker Cluster we have two Instances, the DB itself and a Python Script.
+The Cluster itself is running inside a Network called *Assignment 1 DB*. 
+The Database is a MYSQL-Database and has an attached volume wich is used to store the Data. 
+
+The Scrip is called Tablecreater and creates the Tables. The image contains python 3.7 and the Script. The Script will try to connect to the DB and create the needed Tables. If this fails, the Script will wait for 60 seconds and then try again.
+
+Another Python Script is called DB Filler which will take the Files, extract the Data and then transfer it into the needed Querys. It will then send these to the DB.
+The originial Plan was to deploy another container called *DB_filler* with this script. We had to change Plans, because Containers have a size limit of 10 GB. We would have needed a container of roughly 25 GB. 
+We then decided to run that container seperatly as a normal Python script, which takes some time, but works perfectly.
+
+To Analyze the data, we have created a small Java Script, called Java Gui. The Gui can be used to create predesigned Querys that will be send to the Database.
+
+![Picture of the JAVA GUI](./GUI.png)
+
+## Docker-Compose 
+
+The End Docker File looks like this:
+
+```dockerfile
+version: '0'
+
+services:
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: Reddit
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_User: Python
+      MYSQL_PASSWORD: Python
+      MYSQL_HOST: '%'
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    ports:
+      - "3308:3306"
+
+  Tablecreater:
+    links:
+      - "db:database"
+    image: tablescreater:0.1
+
+
+networks:
+  main:
+    name: Assignment 1 DB
+
+volumes:
+  db_data: {}
+```
+
+The Code and all aditional Things can be found on [Github](https://github.com/Darker97/Reddit-SQL-Databases)
+
+## Internal Structure of the DB
+
+Inside of the Database are three Tables. 
+We have named them Comments, Subreddits and users. 
+
+![](./E:R.png)
+
