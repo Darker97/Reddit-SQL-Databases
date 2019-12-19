@@ -10,7 +10,7 @@ output: pdf_document
 ## Task 1: Relational Algebra
 
 ```{SQL} 
-<!-- Bei 1 - 5 muss jeweils noch die Schreibweise angepasst werden. Z.B bei 1 muss name nach unten gesetzt werden und die Bedninung für den Theta- Join muss unter das Symbol, steht hier jeweils in Klammern dahinter -->
+<!-- Bei 1 - 5 muss jeweils noch die Schreibweise angepasst werden. Z.B bei 1 muss name nach unten gesetzt werden und die Bedninung für den Theta- Join muss unter das Symbol, steht hier jeweils in Klammern dahinter--> 
 
 1) 
 SELECT name 
@@ -113,7 +113,9 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 We can safely ignore keys not mentioned here.
 
 ##Task 4: Importing data
+Question: Would it be reasonable to import and turn on constraints after? When?
 
+The question is whether it really saves time to turn on the constraints afterwards or if it takes even longer if the constraints are checked after they are turned on? 
 ##task 5: Queries
 ###1
 ####Query 
@@ -176,32 +178,32 @@ zwei
 nur eine tabelle	
 ###6
 ####Query
-**Select** SUBREDDIT, ups **as** SCORE 
-**from** Comments **where** ups 
-**in** (
-	**select** **MIN**(ups) 
-	**from** Comments) 
-**UNION** 
-**Select** SUBREDDIT, ups 
-**from** Comments **where** ups **in**(
-	**select** **MAX**(ups) **from** Comments);
+Select SUBREDDIT, ups as SCORE 
+from Comments where ups 
+in (
+	select MIN(ups) 
+	from Comments) 
+UNION 
+Select SUBREDDIT, ups 
+from Comments where ups in(
+	select MAX(ups) from Comments);
 ####Motivation
 nur eine tabelle
 ###7 
 ####Query
-**select** **distinct** USER 
-**from** Reddit.Comments 
-**where** linkID **in** (
-	**select** linkID 
-	**from** Reddit.Comments 
-	**where** USER = '*USER*');
+select distinct USER 
+from Reddit.Comments 
+where linkID in (
+	select linkID 
+	from Reddit.Comments 
+	where USER = 'USER');
 ####Motivation
 nur eine tabelle
 ###8
 ####Query
-**select** USER 
-**from** Comments 
-**group by** USER **having** **count**(linkID) = 1;
+select USER 
+from Comments 
+group by USER having count(linkID) = 1;
 ####Motivation
 nur eine tabelle 
 ###optional?
