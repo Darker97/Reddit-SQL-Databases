@@ -91,78 +91,6 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 1. *Draw an E/R-Diagram that describes the System.*
 
 ## Task 3: Setting up the Reddit Database
-
-## Technical Details
-### The Basic structure. 
-Our System is structured in three Parts:
-
-- A Database
-- Two Python scripts that create and fill the Tables
-- A Java Gui to analyze the created Data.
-
-### The Deployment Structure
-To deploy our DB on many different Systems, we decided to use Docker for the Deployment. 
-Inside of this Docker Cluster we have two Instances running, the DB itself and a Python Script, called Tablecreater, that creates the Tables. The Cluster itself is running inside a Network called *Assignment 1 DB*. 
-
-```
-version: '0'
-
-services:
-
-  db:
-    image: mysql:latest
-    environment:
-      MYSQL_DATABASE: Reddit
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_User: Python
-      MYSQL_PASSWORD: Python
-      MYSQL_HOST: '%'
-      MYSQL_ROOT_HOST: '%'
-      # MYSQL_ROOT_HOST: 0.0.0.0/255.255.255.248
-    volumes:
-      - db_data:/var/lib/mysql
-    restart: always
-    ports:
-      - "3308:3306"
-
-  Tablecreater:
-    links:
-      - "db:database"
-    image: tablescreater:0.1
-
-
-networks:
-  main:
-    name: Assignment 1 DB
-
-volumes:
-  db_data: {}
-```
-
-The Data from the final DB is stored in a Volume called *db_data*. 
-
-The originial Plan was to deploy another container called *DB_filler*. We had to change Plans, because Containers have a size limit of 10 GB. We would have needed a container of roughly 25 GB. 
-We then decided to run that container seperatly as a normal Python script, which takes some time, but works perfectly.
-
-
-### The Database
-To make our DB usefull on many different Systems, we decided to use Docker for the Deployment.
-The DB itself is a MySQL-Database with an attached volume to store the data. 
-
-#### Internal Structure
-Inside of the Database are three Tables. 
-
-### The Tablecreater
-The Tablecreater is a small docker container, containing python 3.7 and a small Python Script. The Script will try to connect to the DB and create the needed Tables. If this fails, the Script will wait for 60 seconds and then try again.
-
-### The DB Filler
-The DB Filler is another Python script that will take the Files, extract the Data and then transfer it into the needed Querys. It will then send these to the DB.
-
-### The GUI
-For the purpose of simplicity we use a GUI, written in JAVA.
-![Picture of the JAVA GUI](./GUI.png)
-
-
 ###Schemas with types
 
 * users(author)
@@ -184,36 +112,97 @@ For the purpose of simplicity we use a GUI, written in JAVA.
 
 We can safely ignore keys not mentioned here.
 
-## Task 5: Queries
-```
-1) function (NameOfUser){
-	QUERY:
-		SELECT SUM()
-		IN COMMENTS
-		WHERE user = NameOfUser
-	}
-2)
-	function (subreddit) {
-	QUERY:
-		SELECT DURCHSCHNITT
-		IN 
-			SELECT GROUP(COMMENTS - DAY)
-			IN Comments
-			Where sub = subreddit
-	}
-3)
-	function (Word) {
-	QUERY:
-		SELECT SUM
-		IN
-			SELECT *
-			In Comments
-			WHERE text INCLUDES Word
-	}
-4)
-	function 
-```
-
-
 ##Task 4: Importing data
+
 ##task 5: Queries
+###1
+####Query 
+**select** count(id) **as** amount **from** Comments **where** user ='*USER*';
+####Motivation
+verwendet nur eine Tabelle 
+###2
+####Query
+**Select** avg(allPerDay.Anzahl) 
+**from**( 
+	**Select** SUBREDDIT, **count**(WRITTEN_ON) as Anzahl 
+	**FROM**(
+		**SELECT** SUBREDDIT, 
+		**round**((created / 60 / 60 / 24), 0) **as** WRITTEN_ON 
+		**FROM** Reddit.Comments 
+		**where** SUBREDDIT = '*SUB*'
+		**ORDER by** WRITTEN_ON) 
+	AS daylight" **group by** WRITTEN_ON)
+**as** allPerDay;
+
+####Motivation
+nur eine Tabelle 
+###3
+####Query
+**select** count(body) **as** amount **from** Comments **where** body **like** '%lol%';
+
+####Motivation
+nur eine tabelle
+###4
+####Query
+**select** **distinct** Comments.SUBREDDIT 
+**from** Comments **join**(
+	**select** **distinct** Comments.USER 
+	**from** Comments **join** Subreddits 
+	**on** Subreddits.Name = Comments.SUBREDDIT 
+	**where** linkID = '*Link*')
+**as** test **on** Comments.USER = test.USER;
+####Motivation
+zwei 
+###5
+####Query
+**Select** test.USER, test.Summe 
+**from**(
+	**Select** USER, **sum**(ups) **as** Summe 
+	**from** Comments group by USER) **as** test 
+	**join**(
+		(**select** **max**(Summe) **as** Summe 
+		**from** (
+			**Select** USER, **sum**(ups) **as** Summe 
+			**from** Comments **group by** USER)
+		**as** Scores) 
+	**union** (
+		**select** **min**(Summe) **as** Summe 
+		**from** (
+			**Select** USER, **sum**(ups) **as** Summe 
+			**from** Comments **group by** USER)
+		**as** Scores))
+**as** dumm **on** test.Summe = dumm.Summe;
+####Motivation
+nur eine tabelle	
+###6
+####Query
+**Select** SUBREDDIT, ups **as** SCORE 
+**from** Comments **where** ups 
+**in** (
+	**select** **MIN**(ups) 
+	**from** Comments) 
+**UNION** 
+**Select** SUBREDDIT, ups 
+**from** Comments **where** ups **in**(
+	**select** **MAX**(ups) **from** Comments);
+####Motivation
+nur eine tabelle
+###7 
+####Query
+**select** **distinct** USER 
+**from** Reddit.Comments 
+**where** linkID **in** (
+	**select** linkID 
+	**from** Reddit.Comments 
+	**where** USER = '*USER*');
+####Motivation
+nur eine tabelle
+###8
+####Query
+**select** USER 
+**from** Comments 
+**group by** USER **having** **count**(linkID) = 1;
+####Motivation
+nur eine tabelle 
+###optional?
+
