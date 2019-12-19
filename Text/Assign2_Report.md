@@ -208,7 +208,7 @@ We therefore conclude that you should include your constraints before you load d
 select count(id) as amount from Comments where user ='USER';
 ```
 ####Motivation
-This Query is quite effective because it works by using only one table.
+This Query is quite effective because it only has to analyze one table.
 
 
 ###2
