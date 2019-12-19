@@ -7,43 +7,21 @@ output: pdf_document
 # Assignment 
 ## Task 1: Relational Algebra
 
-```{SQL} 
 <!-- Bei 1 - 5 muss jeweils noch die Schreibweise angepasst werden. Z.B bei 1 muss name nach unten gesetzt werden und die Bedninung für den Theta- Join muss unter das Symbol, steht hier jeweils in Klammern dahinter--> 
 
 1) 
-SELECT name 
-IN student JOIN enrolled
-Where code = ‚2dv513‘  
-
-result := 𝜋 name(student ⋈ (code = '2dv513') enrolledIn)
+$$ result := 𝜋 name(student ⋈ (code = '2dv513') enrolledIn) $$
 
 2)
-SELECT name 
-IN student JOIN enrolled
-WHERE code = ‚2dv513‘ OR code = ‚1dv513‘
+$$ result := (𝜋 name(student ⋈ (code = '2dv513') enrolledIn)) ∪ (𝜋 name(student ⋈ (code = '1dv513') enrolledIn)) $$
 
-result := (𝜋 name(student ⋈ (code = '2dv513') enrolledIn)) ∪ (𝜋 name(student ⋈ (code = '1dv513') enrolledIn))
-
-3) 
-SELECT lecturer
-IN subject
-WHERE code = ‚2dv610‘
-
-result := 𝜋 lecturer (𝜎 code = '2dv610'(subject))
+1) 
+$$ result := 𝜋 lecturer (𝜎 code = '2dv610'(subject))$$
 
 4)
-SELECT lecturer
-IN subject
-WHERE code = ‚2dv513‘ AND code =‚1dv513‘
-
-result := (𝜋 lecturer (𝜎 code = '2dv610'(subject))) ∪ (𝜋 lecturer (𝜎 code = '1dv513'(subject)))
+$$ result := (𝜋 lecturer (𝜎 code = '2dv610'(subject))) ∪ (𝜋 lecturer (𝜎 code = '1dv513'(subject))) $$
 
 5)
-SELECT name 
-IN student JOIN enrolled JOIN subject
-WHERE lecturer != ‚ILIR‘
-
-```
 $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) $$
 
 ## Task 2: FDs and Normalization
@@ -218,7 +196,7 @@ We therefore conclude that you should plan your constraints before you load data
 select count(id) as amount from Comments where user ='USER';
 ```
 ####Motivation
-This Query is quite effective because it works only with one table.
+This Query is quite effective because it works by using only one table.
 
 
 ###2
@@ -237,7 +215,7 @@ from(
 as allPerDay;
 ```
 ####Motivation
-This Query is quite effective because it works only with one table.
+This Query is quite effective because it works by using only one table.
 
 
 ###3
@@ -246,7 +224,7 @@ This Query is quite effective because it works only with one table.
 select count(body) as amount from Comments where body like '%lol%';
 ```
 ####Motivation
-This Query is quite effective because it works only with one table.
+This Query is quite effective because it works by using only one table.
 
 ###4
 ####Query
@@ -284,10 +262,11 @@ from(
 as dumm on test.Summe = dumm.Summe;
 ```
 ####Motivation
-This Query is quite effective because it works only with one table.
+This Query is quite effective because it works by using only one table.
 
 
 ###6
+For this query, we asume that we should only print out the Subreddit with the highest scored comment, and the Subreddit with the lowest scored comment.
 ####Query
 ```
 Select SUBREDDIT, ups as SCORE 
@@ -301,7 +280,7 @@ from Comments where ups in(
 	select MAX(ups) from Comments);
 ```
 ####Motivation
-This Query is quite effective because it works only with one table.
+This Query is quite effective because it works by using only one table.
 
 
 ###7 
@@ -315,7 +294,7 @@ where linkID in (
 	where USER = 'USER');
 ```
 ####Motivation
-This Query is quite effective because it works only with one table.
+This Query is quite effective because it works by using only one table.
 
 
 ###8
@@ -326,7 +305,7 @@ from Comments
 group by USER having count(linkID) = 1;
 ```
 ####Motivation
-This Query is quite effective because it works only with one table.
+This Query is quite effective because it works by using only one table.
 
 ###optional?
 
