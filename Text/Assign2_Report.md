@@ -263,6 +263,7 @@ nur eine tabelle
 
 ###6
 ####Query
+```
 Select SUBREDDIT, ups as SCORE 
 from Comments where ups 
 in (
@@ -272,25 +273,30 @@ UNION
 Select SUBREDDIT, ups 
 from Comments where ups in(
 	select MAX(ups) from Comments);
+```
 ####Motivation
 nur eine tabelle
 
 ###7 
 ####Query
+```
 select distinct USER 
 from Reddit.Comments 
 where linkID in (
 	select linkID 
 	from Reddit.Comments 
 	where USER = 'USER');
+```
 ####Motivation
 nur eine tabelle
 
 ###8
 ####Query
+```
 select USER 
 from Comments 
 group by USER having count(linkID) = 1;
+```
 ####Motivation
 nur eine tabelle 
 ###optional?
