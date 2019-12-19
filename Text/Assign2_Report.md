@@ -195,7 +195,8 @@ The question is whether it really saves time to turn on the constraints afterwar
 select count(id) as amount from Comments where user ='USER';
 ```
 ####Motivation
-verwendet nur eine Tabelle 
+This Query is quite effective because it works only with one table.
+
 
 ###2
 ####Query
@@ -213,7 +214,8 @@ from(
 as allPerDay;
 ```
 ####Motivation
-nur eine Tabelle 
+This Query is quite effective because it works only with one table.
+
 
 ###3
 ####Query
@@ -221,7 +223,7 @@ nur eine Tabelle
 select count(body) as amount from Comments where body like '%lol%';
 ```
 ####Motivation
-nur eine tabelle
+This Query is quite effective because it works only with one table.
 
 ###4
 ####Query
@@ -259,7 +261,8 @@ from(
 as dumm on test.Summe = dumm.Summe;
 ```
 ####Motivation
-nur eine tabelle	
+This Query is quite effective because it works only with one table.
+
 
 ###6
 ####Query
@@ -275,7 +278,8 @@ from Comments where ups in(
 	select MAX(ups) from Comments);
 ```
 ####Motivation
-nur eine tabelle
+This Query is quite effective because it works only with one table.
+
 
 ###7 
 ####Query
@@ -288,7 +292,8 @@ where linkID in (
 	where USER = 'USER');
 ```
 ####Motivation
-nur eine tabelle
+This Query is quite effective because it works only with one table.
+
 
 ###8
 ####Query
@@ -298,6 +303,7 @@ from Comments
 group by USER having count(linkID) = 1;
 ```
 ####Motivation
-nur eine tabelle 
+This Query is quite effective because it works only with one table.
+
 ###optional?
 
