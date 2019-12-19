@@ -338,12 +338,40 @@ No Complex Operation like Join or Union but we are using the same table for two 
 ```
 select USER 
 from Comments 
-group by USER having count(linkID) = 1;
+group by USER having count(SUBREDDIT) = 1;
 ```
 ####Motivation
 simple as possible
 
-###optional?
+### Optional
+
+#### Query 1
+```
+select distinct SUBREDDIT
+from Comments
+where USER not in (
+	select USER
+	from Comments
+	group by USER having count(SUBREDDIT) > 1);
+```
+
+#### Query 2
+```
+select distinct SUBREDDIT 
+from Comments 
+where USER in (select nirgends.USER
+from 
+	(select USER
+	from Comments
+	group by USER having count(SUBREDDIT) = 1) as nirgends 
+where nirgends.USER not in  
+	(select USER
+	from Comments
+	group by USER having count(SUBREDDIT) > 1));
+```
+
+#### Motivation
+The first one is not as complicated as the second one and is only using one table twiece, where the second one uses the same table three times. 
 
 Which subreddits share no users, i.e., have no users that have posted to the others
 
