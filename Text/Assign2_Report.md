@@ -42,7 +42,6 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 
 **We have multiple FDs.**
 
-
 		room time day -> manager 
 	
 		room time day -> applicant 
@@ -71,12 +70,38 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 1. *Show the relations is in 3NF but not in BCNF*
 
 
-        The manager and the applicant are independent from one another therefore the relation is in 3NF. 
+    The manager and the applicant are independent from one another therefore the relation is in 3NF. 
+
+2. *Decompose the Relations that are in BCNF*
+We assume that the System is based on the 1NF so there are no cells that contain more than one Dataset. We would also assume that there are no partial dependencies in the System, which means that the System is in 2NF.
+
+We have 3 FDs. To make it simpler, I will rename them:
+a = room time day
+b = manager
+c = applicant
+
+a -> b
+a -> c
+a -> bc
+
+As we see, the System has no transetive dependencies, which means we have a System in the 3NF.
+
+To be in the BCNF, it is required that the System has no dependencys, except if both sides contain a key. 
+In all three cases, the only key is a, which means that these forms should not exist in the BCNF. Therfore this System is in NF3 but not in BCNF.
+
+4. *Transform into the BCNF*
+
+For the BCNF we need to make sure that we only have dependencies between Key components. To assure this, we create two new tables, one for the manager and one for the applicant. Both have an ID and their name. The ID is then used as Foreign key for the Interview table. 
+
+Interview(day, time, room, managerId, applicantID)
+manager(id, name)
+applicant(id, name)
+
+Now we only have dependencies between keys, which means the requirment for the BCNF is fullfilled.
 
 
-<!--Beweis das es nicht in BCNF ist fehlt noch--> 
-1. *Decompose the Relations that are in BCNF*
-1. *Draw an E/R-Diagram that describes the System.*
+
+5. *Draw an E/R-Diagram that describes the System.*
 
 ## Task 3: Setting up the Reddit Database
 
@@ -166,9 +191,9 @@ We have named them Comments, Subreddits and users.
 
 The finished schema looked like this:
 
-* Users(Name)
-* Subreddits(Subreddit, Subreddit_id,)
-* Comments(ID, name, body, ups, downs, created, linkID, parentID, Archived, conttiversiality, SUBREDDIT, USER)
+* users(Name)
+* subreddits(subreddit, subreddit_id)
+* comments(id, name, body, score(ups , downs)<!--brauchen wir das?-->created_utc, link-id, parent-id)
 
 
 ##Task 4: Importing data
@@ -208,7 +233,7 @@ We therefore conclude that you should include your constraints before you load d
 select count(id) as amount from Comments where user ='USER';
 ```
 ####Motivation
-This Query is quite effective because it only has to analyze one table.
+This Query is quite effective because it works by using only one table.
 
 
 ###2
