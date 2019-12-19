@@ -10,19 +10,31 @@ output: pdf_document
 <!-- Bei 1 - 5 muss jeweils noch die Schreibweise angepasst werden. Z.B bei 1 muss name nach unten gesetzt werden und die Bedninung für den Theta- Join muss unter das Symbol, steht hier jeweils in Klammern dahinter--> 
 
 1) 
+
 $$ result := 𝜋 name(student ⋈ (code = '2dv513') enrolledIn) $$
+![](./rechnung1.png)
+
 
 2)
 $$ result := (𝜋 name(student ⋈ (code = '2dv513') enrolledIn)) ∪ (𝜋 name(student ⋈ (code = '1dv513') enrolledIn)) $$
+![](./Rechnung2.png)
+
 
 1) 
 $$ result := 𝜋 lecturer (𝜎 code = '2dv610'(subject))$$
+![](./rechnung3.png)
+
 
 4)
 $$ result := (𝜋 lecturer (𝜎 code = '2dv610'(subject))) ∪ (𝜋 lecturer (𝜎 code = '1dv513'(subject))) $$
+![](./rechnung4.png)
+
 
 5)
 $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) $$
+![](./rechnung5.png)
+
+
 
 ## Task 2: FDs and Normalization
 1. *Functional Dependencies* 
