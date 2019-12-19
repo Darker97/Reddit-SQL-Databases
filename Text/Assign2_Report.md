@@ -211,7 +211,7 @@ from(
 		FROM Reddit.Comments 
 		where SUBREDDIT = 'SUB'
 		ORDER by WRITTEN_ON) 
-	AS daylight" group by WRITTEN_ON)
+	AS daylight group by WRITTEN_ON)
 as allPerDay;
 ```
 ####Motivation
