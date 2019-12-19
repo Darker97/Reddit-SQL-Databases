@@ -166,9 +166,9 @@ We have named them Comments, Subreddits and users.
 
 The finished schema looked like this:
 
-* users(author)
-* subreddits(subreddit, subreddit-id,)
-* comments(id, name, body, score(ups , downs)<!--brauchen wir das?-->created_utc, link-id, parent-id)
+* Users(Name)
+* Subreddits(Subreddit, Subreddit_id,)
+* Comments(ID, name, body, ups, downs, created, linkID, parentID, Archived, conttiversiality, SUBREDDIT, USER)
 
 
 ##Task 4: Importing data
