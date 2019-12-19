@@ -112,37 +112,6 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 
 We can safely ignore keys not mentioned here.
 
-## Task 5: Queries
-```
-1) function (NameOfUser){
-	QUERY:
-		SELECT SUM()
-		IN COMMENTS
-		WHERE user = NameOfUser
-	}
-2)
-	function (subreddit) {
-	QUERY:
-		SELECT DURCHSCHNITT
-		IN 
-			SELECT GROUP(COMMENTS - DAY)
-			IN Comments
-			Where sub = subreddit
-	}
-3)
-	function (Word) {
-	QUERY:
-		SELECT SUM
-		IN
-			SELECT *
-			In Comments
-			WHERE text INCLUDES Word
-	}
-4)
-	function 
-```
-
-
 ##Task 4: Importing data
 
 ##task 5: Queries
