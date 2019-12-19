@@ -78,6 +78,8 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 1. *Decompose the Relations that are in BCNF*
 1. *Draw an E/R-Diagram that describes the System.*
 
+![](./ERDiagramTask2.png)
+
 ## Task 3: Setting up the Reddit Database
 
 
