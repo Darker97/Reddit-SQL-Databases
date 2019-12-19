@@ -67,5 +67,11 @@ The Code and all aditional Things can be found on [Github](https://github.com/Da
 ## Internal Structure of the DB
 
 Inside of the Database are three Tables. 
+We have named them Comments, Subreddits and users. 
+
+![](./ER-Diagram.png)
+
+
+
 
 
