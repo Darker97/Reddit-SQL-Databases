@@ -45,7 +45,7 @@ SELECT name
 IN student JOIN enrolled JOIN subject
 WHERE lecturer != ‚ILIR‘
 
-``` 
+```
 $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) $$
 
 ## Task 2: FDs and Normalization
@@ -56,12 +56,12 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 
 
 		room time day -> manager 
-
+	
 		room time day -> applicant 
 		
 		--> room time day --> manager applicant 
 		
-     **or more?**		
+	 **or more?**		
   		manager day -> room
 		
 		manager applicant day -> room time
@@ -75,14 +75,14 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 
 
 		Super Keys: 
-
+	
 		* room, time, day, applicant 
 		* room, time, day, manager 
 		* room, time, day, manager, applicant 
 
 1. *Show the relations is in 3NF but not in BCNF*
 
- 
+
         The manager and the applicant are independent from one another therefore the relation is in 3NF. 
 
 
@@ -91,91 +91,176 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 1. *Draw an E/R-Diagram that describes the System.*
 
 ## Task 3: Setting up the Reddit Database
-###Schemas with types
+
+
+### The Structure
+
+To build up our Database System (DB), we had to solve some specifications. 
+Because we were working on to different Workstations, our Database had to be easy deployabal, so we could use it on different Systems.
+The System should also be easy to modify and should build the ground Structures, such as tables by itself. We should also have no Problems with Networking connections.
+
+Because of these Requirments, we came up with a Docker solution. 
+
+![](./System-Structure.png)
+
+Inside the Docker Cluster we have two Instances, the DB itself and a Python Script.
+The Cluster itself is running inside a Network called *Assignment 1 DB*. 
+The Database is a MYSQL-Database and has an attached volume wich is used to store the Data. 
+
+The Scrip is called Tablecreater and creates the Tables. The image contains python 3.7 and the Script. The Script will try to connect to the DB and create the needed Tables. If this fails, the Script will wait for 60 seconds and then try again.
+
+Another Python Script is called DB Filler which will take the Files, extract the Data and then transfer it into the needed Querys. It will then send these to the DB.
+The originial Plan was to deploy another container called *DB_filler* with this script. We had to change Plans, because Containers have a size limit of 10 GB. We would have needed a container of roughly 25 GB. 
+We then decided to run that container seperatly as a normal Python script, which takes some time, but works perfectly.
+
+To Analyze the data, we have created a small Java Script, called Java Gui. The Gui can be used to create predesigned Querys that will be send to the Database.
+
+![Picture of the JAVA GUI](./GUI.png)
+
+### Docker-Compose 
+
+The End Docker File looks like this:
+
+```dockerfile
+version: '0'
+
+services:
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: Reddit
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_User: Python
+      MYSQL_PASSWORD: Python
+      MYSQL_HOST: '%'
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    ports:
+      - "3308:3306"
+
+  Tablecreater:
+    links:
+      - "db:database"
+    image: tablescreater:0.1
+
+
+networks:
+  main:
+    name: Assignment 1 DB
+
+volumes:
+  db_data: {}
+```
+
+The Code and all aditional Things can be found on [Github](https://github.com/Darker97/Reddit-SQL-Databases)
+
+### Internal Structure of the DB
+
+After the DB was functioning properly, 
+we had to use the JSON Structure to create our Schema.
+
+![](./Reddit-JSONStructure.jpeg)
+
+We also had a List of keys.
+
+![](./Reddit&#32;-&#32;Keys.jpeg)
+
+
+The JSON Code was located  inside three Files, each containg all reddit posts of a single month.
+
+We decided to create three Tables. 
+We have named them Comments, Subreddits and users. 
+
+![](./E:R.png)
+
+The finished schema looked like this:
 
 * users(author)
 * subreddits(subreddit, subreddit-id,)
 * comments(id, name, body, score(ups , downs)<!--brauchen wir das?-->created_utc, link-id, parent-id)
 
 
-### Notes
-- The data is stored in Files
-- The data is in Form of JSON FILES
-- Each file contains a single month of Reddit posts
-
-### JSON - Structure
-
-![]("Reddit-JSONStructure.jpeg")
-### Keys
-
-![](Reddit - Keys.jpeg)
-
-We can safely ignore keys not mentioned here.
-
 ##Task 4: Importing data
 Question: Would it be reasonable to import and turn on constraints after? When?
 
 The question is whether it really saves time to turn on the constraints afterwards or if it takes even longer if the constraints are checked after they are turned on? 
 ##task 5: Queries
+
 ###1
 ####Query 
-**select** count(id) **as** amount **from** Comments **where** user ='*USER*';
+```
+select count(id) as amount from Comments where user ='USER';
+```
 ####Motivation
 verwendet nur eine Tabelle 
+
 ###2
 ####Query
-**Select** avg(allPerDay.Anzahl) 
-**from**( 
-	**Select** SUBREDDIT, **count**(WRITTEN_ON) as Anzahl 
-	**FROM**(
-		**SELECT** SUBREDDIT, 
-		**round**((created / 60 / 60 / 24), 0) **as** WRITTEN_ON 
-		**FROM** Reddit.Comments 
-		**where** SUBREDDIT = '*SUB*'
-		**ORDER by** WRITTEN_ON) 
-	AS daylight" **group by** WRITTEN_ON)
-**as** allPerDay;
-
+```
+Select avg(allPerDay.Anzahl) 
+from( 
+	Select SUBREDDIT, count(WRITTEN_ON) as Anzahl 
+	FROM(
+		SELECT SUBREDDIT, 
+		round((created / 60 / 60 / 24), 0) as WRITTEN_ON 
+		FROM Reddit.Comments 
+		where SUBREDDIT = 'SUB'
+		ORDER by WRITTEN_ON) 
+	AS daylight" group by WRITTEN_ON)
+as allPerDay;
+```
 ####Motivation
 nur eine Tabelle 
+
 ###3
 ####Query
-**select** count(body) **as** amount **from** Comments **where** body **like** '%lol%';
-
+```
+select count(body) as amount from Comments where body like '%lol%';
+```
 ####Motivation
 nur eine tabelle
+
 ###4
 ####Query
-**select** **distinct** Comments.SUBREDDIT 
-**from** Comments **join**(
-	**select** **distinct** Comments.USER 
-	**from** Comments **join** Subreddits 
-	**on** Subreddits.Name = Comments.SUBREDDIT 
-	**where** linkID = '*Link*')
-**as** test **on** Comments.USER = test.USER;
+```
+select distinct Comments.SUBREDDIT 
+from Comments join(
+	select distinct Comments.USER 
+	from Comments join Subreddits 
+	on Subreddits.Name = Comments.SUBREDDIT 
+	where linkID = '*Link*')
+as test on Comments.USER = test.USER;
+```
 ####Motivation
 zwei 
+
 ###5
 ####Query
-**Select** test.USER, test.Summe 
-**from**(
-	**Select** USER, **sum**(ups) **as** Summe 
-	**from** Comments group by USER) **as** test 
-	**join**(
-		(**select** **max**(Summe) **as** Summe 
-		**from** (
-			**Select** USER, **sum**(ups) **as** Summe 
-			**from** Comments **group by** USER)
-		**as** Scores) 
-	**union** (
-		**select** **min**(Summe) **as** Summe 
-		**from** (
-			**Select** USER, **sum**(ups) **as** Summe 
-			**from** Comments **group by** USER)
-		**as** Scores))
-**as** dumm **on** test.Summe = dumm.Summe;
+```
+Select test.USER, test.Summe 
+from(
+	Select USER, sum(ups) as Summe 
+	from Comments group by USER) as test 
+	join(
+		(select max(Summe) as Summe 
+		from (
+			Select USER, sum(ups) as Summe 
+			from Comments group by USER)
+		as Scores) 
+	union (
+		select min(Summe) as Summe 
+		from (
+			Select USER, sum(ups) as Summe 
+			from Comments group by USER)
+		as Scores))
+as dumm on test.Summe = dumm.Summe;
+```
 ####Motivation
 nur eine tabelle	
+
 ###6
 ####Query
 Select SUBREDDIT, ups as SCORE 
@@ -189,6 +274,7 @@ from Comments where ups in(
 	select MAX(ups) from Comments);
 ####Motivation
 nur eine tabelle
+
 ###7 
 ####Query
 select distinct USER 
@@ -199,6 +285,7 @@ where linkID in (
 	where USER = 'USER');
 ####Motivation
 nur eine tabelle
+
 ###8
 ####Query
 select USER 
