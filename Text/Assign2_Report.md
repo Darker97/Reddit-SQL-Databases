@@ -187,6 +187,8 @@ The finished schema looked like this:
 Question: Would it be reasonable to import and turn on constraints after? When?
 
 The question is whether it really saves time to turn on the constraints afterwards or if it takes even longer if the constraints are checked after they are turned on? 
+
+
 ##task 5: Queries
 
 ###1
@@ -210,7 +212,7 @@ from(
 		FROM Reddit.Comments 
 		where SUBREDDIT = 'SUB'
 		ORDER by WRITTEN_ON) 
-	AS daylight" group by WRITTEN_ON)
+	AS daylight group by WRITTEN_ON)
 as allPerDay;
 ```
 ####Motivation
