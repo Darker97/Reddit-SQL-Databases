@@ -4,8 +4,6 @@ author: "Carolin Brückman und Christian Baltzer"
 output: pdf_document
 
 ---
-
-
 # Assignment 
 ## Task 1: Relational Algebra
 
@@ -187,6 +185,31 @@ The finished schema looked like this:
 Question: Would it be reasonable to import and turn on constraints after? When?
 
 The question is whether it really saves time to turn on the constraints afterwards or if it takes even longer if the constraints are checked after they are turned on? 
+
+In Theory, it should take less time to load the datasets, if you turn of the constraint, because the DBMS doesn't chack on every entry if that one is even allowed. 
+We have calculated the differenz in the following. 
+
+To do so, we create a modell in which we load 10 Users into a Database. 
+Because the time to run an SQL operation varies, we have used time units to measure it more correctly. Each operation needs one time Unit. Users only have one field, which is why creating them only takes one time unit.
+![](./Time-Graph.png)
+
+In the end, the method with activated constraints takes 55 time units, the moment without constraints takes 10. But the result is not the same yet. 
+
+In the case with constraints, the Database is ready to be used, in the method without constraints it's not. The Rules we would like to add to the DB are not in place yet. If we activate them, it takes some time to redo the database. In our Modell, each user we controll, has to be checked with 9 other Entrys. 
+
+|Method|Input Time   |Extra Time|Total Time|
+|---|---|---|---|
+|with Constraint	|55   |0  |55 |
+|without Constraint	|10   |90 |100|
+
+We have calculated the worst case scenario, but we can see, that the total time of the method without constraint is way higher than the time with Constraint.
+
+We therefore conclude that you should plan your constraints before you load data into the database.
+
+<!--Trenner:--------------------------------------------------:Trenner-->
+
+
+
 ##task 5: Queries
 
 ###1
