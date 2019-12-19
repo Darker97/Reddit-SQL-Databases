@@ -103,6 +103,8 @@ Now we only have dependencies between keys, which means the requirment for the B
 
 5. *Draw an E/R-Diagram that describes the System.*
 
+![](./ERDiagramTask2.png)
+
 ## Task 3: Setting up the Reddit Database
 
 
