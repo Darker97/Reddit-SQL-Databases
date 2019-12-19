@@ -41,21 +41,19 @@ $$ result := (𝜋 name(student ⋈ enrolledIn ⋈(lecturer != 'ilir') subject) 
 
 
 **We have multiple FDs.**
+	room time day -> manager 
 
-		room time day -> manager 
+	room time day -> applicant 
 	
-		room time day -> applicant 
+	room time day --> manager applicant 
 		
-		--> room time day --> manager applicant 
-		
-	 **or more?**		
-  		manager day -> room
-		
-		manager applicant day -> room time
-		
-		room time day -> manager applicant
-		
-		applicant day -> room manager time 
+**or more?**	
+
+	manager day -> room
+
+	manager applicant day -> room time
+
+	applicant day -> room manager time 
 1. *Find the Keys* 	
 
 		Primary Key: room, time, day 
@@ -235,8 +233,8 @@ We therefore conclude that you should include your constraints before you load d
 select count(id) as amount from Comments where user ='USER';
 ```
 ####Motivation
-This Query is quite effective because it works by using only one table.
-
+- This Query is quite effective because it works by using only one table.
+- We are only searching for the nessecary parts
 
 ###2
 ####Query
@@ -254,19 +252,20 @@ from(
 as allPerDay;
 ```
 ####Motivation
-This Query is quite effective because it works by using only one table.
-
+- This Query is quite effective because it works by using only one table.
 
 ###3
 ####Query
+We assume for this Task, that we only want to check the body for the word 'lol' and not the title.
 ```
 select count(body) as amount from Comments where body like '%lol%';
 ```
 ####Motivation
-This Query is quite effective because it works by using only one table.
+- This Query is quite effective because it works by using only one table.
+- We are only searching for the nessecary parts
 
 ###4
-####Query
+#### Query
 ```
 select distinct Comments.SUBREDDIT 
 from Comments join(
@@ -276,8 +275,9 @@ from Comments join(
 	where linkID = '*Link*')
 as test on Comments.USER = test.USER;
 ```
-####Motivation
-zwei 
+#### Motivation
+- We only use two tables, not three
+- Dissadvantage: We use a Join
 
 ###5
 ####Query
@@ -298,11 +298,10 @@ from(
 			Select USER, sum(ups) as Summe 
 			from Comments group by USER)
 		as Scores))
-as dumm on test.Summe = dumm.Summe;
+as Peter on test.Summe = Peter.Summe;
 ```
 ####Motivation
-This Query is quite effective because it works by using only one table.
-
+Dissadvantege: We had to use one join and one Union Operation but that would make the Query more complex and compligated which would lead to more possible mistakes.
 
 ###6
 For this query, we asume that we should only print out the Subreddit with the highest scored comment, and the Subreddit with the lowest scored comment.
@@ -319,8 +318,7 @@ from Comments where ups in(
 	select MAX(ups) from Comments);
 ```
 ####Motivation
-This Query is quite effective because it works by using only one table.
-
+Not the best Idea if you look for performance (usage of UNION) but the most usefull for the presentation of the result. NO NULL IN RESULT.
 
 ###7 
 ####Query
@@ -333,8 +331,7 @@ where linkID in (
 	where USER = 'USER');
 ```
 ####Motivation
-This Query is quite effective because it works by using only one table.
-
+No Complex Operation like Join or Union but we are using the same table for two analysations. 
 
 ###8
 ####Query
@@ -344,7 +341,9 @@ from Comments
 group by USER having count(linkID) = 1;
 ```
 ####Motivation
-This Query is quite effective because it works by using only one table.
+simple as possible
 
 ###optional?
+
+Which subreddits share no users, i.e., have no users that have posted to the others
 
